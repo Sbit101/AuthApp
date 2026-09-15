@@ -1,0 +1,135 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+}
+
+
+@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+}
+
+
+
+@model AuthApp.Models.MeaslesCase
+
+@{
+    ViewData["Title"] = "Details";
+}
+
+<h1>Details</h1>
+
+@if (Model.PatientMeaslesPicture == null)
+{
+    <img src="~/defaultpic.png" class="img-fluid rounded mx-auto d-block" height="250px" width="0" alt="...">
+
+}
+@if (Model.PatientMeaslesPicture != null)
+{
+    <img class="img-fluid rounded mx-auto d-block" style="height:250px" src="data:image/*;base64,@(Convert.ToBase64String(Model.PatientMeaslesPicture))" alt="Card image cap">
+
+}
+
+<div>
+    <h4>Measles Case Form</h4>
+    <hr />
+    <dl class="row">
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.NameOfTreatingPhysician)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.NameOfTreatingPhysician)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.NameOfHealthcareCentre)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.NameOfHealthcareCentre)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.HealthcareCentreTelephone)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.HealthcareCentreTelephone)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.PatientFirstName)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.PatientFirstName)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.PatientLastName)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.PatientLastName)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.PatientAge)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.PatientAge)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.PatientSex)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.PatientSex)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.PatientCountry)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.PatientCountry)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.PatientTelephoneNumber)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.PatientTelephoneNumber)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.PatientCity)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.PatientCity)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.PatientAddress)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.PatientAddress)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.PatientHouseHoldSize)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.PatientHouseHoldSize)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.PatientSymptomsPositiveForMeasles)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.PatientSymptomsPositiveForMeasles)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.DateofFirstClinicalDiagnosis)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.DateofFirstClinicalDiagnosis)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.DateSymptomsOnset)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.DateSymptomsOnset)
+        </dd>
+
+    </dl>
+</div>
+<div>
+    <a asp-action="Edit" asp-route-id="@Model?.Id">Edit</a> |
+    <a asp-action="Index">Back to List</a>
+</div>

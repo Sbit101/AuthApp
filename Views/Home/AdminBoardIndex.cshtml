@@ -1,0 +1,15 @@
+﻿@{
+    ViewData["Title"] = "Admin Board";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h1>@ViewData["Title"]</h1>
+
+<p>Use this page to assign and manage user roles.</p>
+
+<a class="btn btn-primary" asp-controller="UserRoles" asp-action="Index">Manage User Roles</a>
+
+<a class="btn btn-primary" asp-controller="RoleManager" asp-action="Index">Manage Type of Roles</a>
+
+
+

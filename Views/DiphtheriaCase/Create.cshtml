@@ -1,0 +1,986 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+}
+
+
+
+@model AuthApp.Models.DiphtheriaCase
+
+
+<style>
+
+    .card {
+        position: relative;
+        display: block;
+        flex-direction: column;
+        min-width: 0;
+        word-wrap: break-word;
+        background-color: gainsboro;
+        color: black;
+        background-clip: border-box;
+        border: 1px solid rgba(0, 0, 0, .125);
+        border-radius: .25rem;
+    }
+
+    <!-- heros-- >
+    .bd-placeholder-img {
+        font-size: 1.125rem;
+        text-anchor: middle;
+        -webkit-user-select: none;
+        -moz-user-select: none;
+        user-select: none;
+    }
+
+    {
+        font-size: 3.5rem;
+    }
+
+    }
+
+    .b-example-divider {
+        width: 100%;
+        height: 3rem;
+        background-color: rgba(0, 0, 0, .1);
+        border: solid rgba(0, 0, 0, .15);
+        border-width: 1px 0;
+        box-shadow: inset 0 .5em 1.5em rgba(0, 0, 0, .1), inset 0 .125em .5em rgba(0, 0, 0, .15);
+    }
+
+    .b-example-vr {
+        flex-shrink: 0;
+        width: 1.5rem;
+        height: 100vh;
+    }
+
+    .bi {
+        vertical-align: -.125em;
+        fill: currentColor;
+    }
+
+    .nav-scroller {
+        position: relative;
+        z-index: 2;
+        height: 2.75rem;
+        overflow-y: hidden;
+    }
+
+        .nav-scroller .nav {
+            display: flex;
+            flex-wrap: nowrap;
+            padding-bottom: 1rem;
+            margin-top: -1px;
+            overflow-x: auto;
+            text-align: center;
+            white-space: nowrap;
+            -webkit-overflow-scrolling: touch;
+        }
+
+    .btn-bd-primary {
+        --bd-violet-bg: #712cf9;
+        --bd-violet-rgb: 112.520718, 44.062154, 249.437846;
+        --bs-btn-font-weight: 600;
+        --bs-btn-color: var(--bs-white);
+        --bs-btn-bg: var(--bd-violet-bg);
+        --bs-btn-border-color: var(--bd-violet-bg);
+        --bs-btn-hover-color: var(--bs-white);
+        --bs-btn-hover-bg: #6528e0;
+        --bs-btn-hover-border-color: #6528e0;
+        --bs-btn-focus-shadow-rgb: var(--bd-violet-rgb);
+        --bs-btn-active-color: var(--bs-btn-hover-color);
+        --bs-btn-active-bg: #5a23c8;
+        --bs-btn-active-border-color: #5a23c8;
+    }
+
+    .bd-mode-toggle {
+        z-index: 1500;
+    }
+
+        .bd-mode-toggle .dropdown-menu .active .bi {
+            display: block !important;
+        }
+
+
+    .accordion-button:focus {
+        z-index: 3;
+        border-color: #86b7fe;
+        outline: 0;
+        box-shadow: 0 0 0 .25rem rgba(13, 110, 253, .25);
+    }
+
+    .accordion-button:not(.collapsed) {
+        color: #0c63e4;
+        background-color: #e7f1ff;
+        box-shadow: inset 0 -1px 0 rgba(0, 0, 0, .125);
+    }
+
+    .carousel-control-next-icon {
+        background-image: url(data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16' fill='%23fff'%3e%3cpath d='M4.646 1.646a.5.5 0 0 1 .708 0l6 6a.5.5 0 0 1 0 .708l-6 6a.5.5 0 0 1-.708-.708L10.293 8 4.646 2.354a.5.5 0 0 1 0-.708z'/%3e%3c/svg%3e);
+        background-color: black;
+    }
+
+    .carousel-control-prev-icon {
+        background-image: url(data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16' fill='%23fff'%3e%3cpath d='M11.354 1.646a.5.5 0 0 1 0 .708L5.707 8l5.647 5.646a.5.5 0 0 1-.708.708l-6-6a.5.5 0 0 1 0-.708l6-6a.5.5 0 0 1 .708 0z'/%3e%3c/svg%3e);
+        background-color: black;
+    }
+
+
+
+    <!-- .label {
+        display: inline-block;
+        font-weight: 300;
+        font-size: 12px;
+    }
+    -->
+    .label {
+        display: inline-block;
+        font-weight: normal;
+    }
+
+    .badge {
+        display: block;
+        padding: .35em .65em;
+        font-size: .75em;
+        font-weight: 700;
+        line-height: 1;
+        color: #fff;
+        text-align: center;
+        white-space: nowrap;
+        vertical-align: baseline;
+        border-radius: .25rem;
+    }
+
+    .img-thumbnail {
+        padding: .25rem;
+        background-color: #fff;
+        border: 1px solid #dee2e6;
+        border-radius: .25rem;
+        max-width: 100%;
+        height: auto;
+        float: right;
+    }
+
+</style>
+
+
+
+
+
+
+<h1>Create Diphtheria Case</h1>
+
+
+<div class="badge">
+    <p style="color:red;">
+        @ViewBag.FileStats
+    </p>
+</div>
+
+
+<h4> Diphtheria Case</h4>
+<hr />
+
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-md-12">
+            <form asp-action="Create" enctype="multipart/form-data">
+                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
+
+                <div class="section px-4 py-5 my-5 text-black-50 rounded-3 border shadow-lg" style="background-color: aliceblue;">
+
+                    <!--
+                    <span class="badge text-dark" style="background-color: #9acbff;">Doctor Info</span>
+                    <br />
+                    -->
+                    <!--#3232323b;-->
+
+                    <div class="col">
+
+                        <div class="card sm-3" style="">
+
+                            <div class="icon text-primary">
+                                <i class="fas fa-dollar-sign"></i>
+                                <img src="~/logo/health_and_safety_80dp_white.png" class="img-thumbnail" height="80" />
+                            </div>
+                            <!--padding: 6px; margin-bottom: 8px;-->
+
+                            <div class="card-body" style="text-align:unset;">
+                                <h5 class="card-title">Doctor Information:</h5>
+                                <p class="card-text">
+                                    <small class="text-muted">
+                                        Please fill Doctor Information:
+                                    </small>
+                                </p>
+
+
+                                <div class="row g-3">
+                                    <div class="col-sm-12">
+                                        <label asp-for="NameOfTreatingPhysician" class="control-label"></label>
+                                        <input asp-for="NameOfTreatingPhysician" class="form-control" />
+                                        <span asp-validation-for="NameOfTreatingPhysician" class="text-danger"></span>
+                                    </div>
+                                    <div class="col-sm-4">
+                                        <label asp-for="NameOfHealthcareCentre" class="control-label"></label>
+                                        <input asp-for="NameOfHealthcareCentre" class="form-control" />
+                                        <span asp-validation-for="NameOfHealthcareCentre" class="text-danger"></span>
+                                    </div>
+                                    <div class="col-sm-4">
+                                        <label asp-for="HealthcareCentreTelephone" class="control-label"></label>
+                                        <input asp-for="HealthcareCentreTelephone" class="form-control" />
+                                        <span asp-validation-for="HealthcareCentreTelephone" class="text-danger"></span>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+
+
+
+                <div class="section px-4 py-5 my-5 text-center rounded-3 border shadow-lg" style="padding: 6px; margin-bottom: 8px; background-color: aliceblue; color:black;">
+
+                    <!--
+                    <span class="badge text-dark" style="background-color: #ff9afb">Patient Info:</span>
+                    <br/>
+
+                    -->
+                    <div class="col">
+                        <div class="card sm-3">
+
+                            <div class="icon text-primary">
+                                <i class="fas fa-dollar-sign"></i>
+                                <img src="~/logo/health_and_safety_80dp_white.png" class="img-thumbnail" height="80" />
+                            </div>
+
+
+                            <div class="card-body" style="text-align:left;">
+                                <h5 class="card-title">Paitent Information:</h5>
+                                <p class="card-text">
+                                    <small class="text-black-50">
+                                        Please Fill Patient Information:
+                                    </small>
+                                </p>
+
+
+                                <div class="row g-3">
+                                    <div class="col-sm-7">
+                                        <label asp-for="PatientFirstName" class="control-label"></label>
+                                        <input asp-for="PatientFirstName" class="form-control" />
+                                        <span asp-validation-for="PatientFirstName" class="text-danger"></span>
+                                    </div>
+                                    <div class="col-sm">
+                                        <label asp-for="PatientLastName" class="control-label"></label>
+                                        <input asp-for="PatientLastName" class="form-control" />
+                                        <span asp-validation-for="PatientLastName" class="text-danger"></span>
+                                    </div>
+                                    <div class="col-sm">
+                                        <label asp-for="PatientAge" class="control-label"></label>
+                                        <input asp-for="PatientAge" class="form-control" />
+                                        <span asp-validation-for="PatientAge" class="text-danger"></span>
+                                    </div>
+                                </div>
+
+
+                                <div class="row g-3">
+                                    <div class="col-sm-3">
+                                        <label asp-for="PatientSex" class="control-label"></label>
+                                        <input asp-for="PatientSex" class="form-control" />
+                                        <span asp-validation-for="PatientSex" class="text-danger"></span>
+                                    </div>
+
+                                    <div class="col-sm">
+                                        <label asp-for="PatientCountry" class="control-label"></label>
+                                        <input asp-for="PatientCountry" class="form-control" />
+                                        <span asp-validation-for="PatientCountry" class="text-danger"></span>
+                                    </div>
+
+                                    <div class="col-sm">
+                                        <label asp-for="PatientTelephoneNumber" class="control-label"></label>
+                                        <input asp-for="PatientTelephoneNumber" class="form-control" />
+                                        <span asp-validation-for="PatientTelephoneNumber" class="text-danger"></span>
+                                    </div>
+                                </div>
+
+                                <div class="row g-3">
+                                    <div class="col-sm-3">
+                                        <label asp-for="PatientCity" class="control-label"></label>
+                                        <input asp-for="PatientCity" class="form-control" />
+                                        <span asp-validation-for="PatientCity" class="text-danger"></span>
+                                    </div>
+
+                                    <div class="col-sm">
+                                        <label asp-for="PatientAddress" class="control-label"></label>
+                                        <input asp-for="PatientAddress" class="form-control" />
+                                        <span asp-validation-for="PatientAddress" class="text-danger"></span>
+                                    </div>
+
+                                    <div class="col-sm">
+                                        <label asp-for="PatientHouseHoldSize" class="control-label"></label>
+                                        <input asp-for="PatientHouseHoldSize" class="form-control" />
+                                        <span asp-validation-for="PatientHouseHoldSize" class="text-danger"></span>
+                                    </div>
+                                </div>
+
+
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+
+
+
+                <div class="section px-4 py-5 my-5 text-center rounded-3 border shadow-lg" style="padding: 6px; margin-bottom: 8px; background-color: aliceblue;">
+
+                    <!--
+                    <span class="badge text-dark" style="background-color: #ff656ac9;">Symptom Info:</span>
+
+                    -->
+                    <div class="col">
+                        <div class="card col-sm-12" style="">
+
+
+                            <div class="icon text-primary">
+                                <i class="fas fa-dollar-sign"></i>
+                                <img src="~/logo/health_and_safety_80dp_white.png" class="img-thumbnail" height="80" />
+                            </div>
+
+                            <div class="card-body" style="text-align:left;">
+                                <h5 class="card-title">Symptom Information</h5>
+                                <p class="card-text">
+                                    <small class="text-muted">
+                                        Please fill Symptoms information:
+                                    </small>
+                                </p>
+
+                                <div class="card-body">
+                                    <br />
+                                    <h6>Signs and Symptoms of </h6>
+                                    <br />
+                                    <cite>Mayo Clinic website</cite>
+                                    <p>
+                          
+                                    </p>
+                                    <br />
+                                    <p class="card-header">Diphtheria Symptoms:</p>
+                                    <p>
+                                        Symptoms
+                                        Diphtheria signs and symptoms usually begin 2 to 5 days after a person becomes infected. Signs and symptoms may include:
+
+                                        A thick, gray membrane covering the throat and tonsils
+                                        A sore throat and hoarseness
+                                        Swollen glands (enlarged lymph nodes) in the neck
+                                        Difficulty breathing or rapid breathing
+                                        Nasal discharge
+                                        Fever and chills
+                                        Tiredness
+                                        In some people, infection with diphtheria-causing bacteria causes only a mild illness — or no obvious signs and symptoms at all. Infected people who stay unaware of their illness are known as carriers of diphtheria. They're called carriers because they can spread the infection without being sick themselves.
+
+
+
+                                    </p>
+
+                                    <p>
+                                        <b>Skin (cutaneous) diphtheria:</b>
+                                        A second type of diphtheria can affect the skin, causing pain, redness and swelling similar to other bacterial skin infections. Ulcers covered by a gray membrane also may be a sign of skin diphtheria.
+                                    </p>
+
+                                    <p>
+                                        Although it's more common in tropical climates, diphtheria on the skin also occurs in the United States. It may happen especially among people with poor hygiene who live in crowded conditions.
+                                    </p>
+                                    <br />
+
+                                    <div class="card-group">
+                                        <b>Incubation Period:</b>
+                                        Diphtheria signs and symptoms usually begin 2 to 5 days after a person becomes infected.
+                                        When to see a doctor
+                                        Call your family doctor immediately if you or your child has been exposed to someone with diphtheria. If you're not sure whether your child has been vaccinated against diphtheria, schedule an appointment. Make sure your own vaccinations are current
+                                        <br />
+                                    </div>
+
+                                    <br />
+
+                                    <div class="card-group" style="text-align: left;padding: 8px;">
+
+                                        <ul class="list-group">
+                                            <li style="list-style:none;"><b>Symptoms:</b></li>
+                                            <li>A thick, gray membrane covering the throat and tonsils</li>
+                                            <li>A sore throat and hoarseness</li>
+                                            <li>Swollen glands (enlarged lymph nodes) in the neck</li>
+                                            <li>Difficulty breathing or rapid breathing</li>
+                                            <li>Nasal discharge</li>
+                                            <li>Fever and chills</li>
+                                            <li>Tiredness</li>
+                                            <li>
+                                                <i>
+                                                    Skin (cutaneous) diphtheria
+                                                    A second type of diphtheria can affect the skin, causing pain, redness and swelling similar to other bacterial skin infections. Ulcers covered by a gray membrane also may be a sign of skin diphtheria.
+                                                </i>
+                                            </li>
+                                        </ul>
+
+                                    </div>
+
+                                </div>
+
+                                <!--pic start-->
+                                <div id="carouselExampleCaptions" class="carousel slide col-lg-9 mx-auto">
+                                    <div class="carousel-indicators">
+                                        <button type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
+                                        <button type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide-to="1" aria-label="Slide 2"></button>
+                                        <button type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide-to="2" aria-label="Slide 3"></button>
+                                    </div>
+                                    <div class="carousel-inner">
+                                        <div class="carousel-item active">
+                                            <img src="~/images/pics_diphtheria/diphtheria-2.jpg" class="card-img img-fluid" width="auto" height="auto" style="aspect-ratio: auto;" preserveAspectRatio="xMidYMid slice" loading="lazy" alt="...">
+                                            <div class="carousel-caption d-none d-md-block">
+                                                <h5></h5>
+                                                <p></p>
+                                            </div>
+                                        </div>
+                                        <div class="carousel-item">
+                                            <img src="~/images/pics_diphtheria/diphtheria-3.jpg" class="card-img img-fluid" width="auto" height="auto" style="aspect-ratio: auto;" preserveAspectRatio="xMidYMid slice" loading="lazy" alt="...">
+                                            <div class="carousel-caption d-none d-md-block">
+                                                <h5></h5>
+                                                <p></p>
+                                            </div>
+                                        </div>
+                                        <div class="carousel-item">
+                                            <img src="~/images/pics_diphtheria/diphtheria-4.jpg" class="card-img img-fluid" width="600" height="900" style="aspect-ratio: auto;" preserveAspectRatio="xMidYMid slice" loading="lazy" alt="...">
+                                            <div class="carousel-caption d-none d-md-block">
+                                                <h5></h5>
+                                                <p></p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide="prev">
+                                        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                                        <span class="visually-hidden">Previous</span>
+                                    </button>
+                                    <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide="next">
+                                        <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                                        <span class="visually-hidden">Next</span>
+                                    </button>
+                                </div>
+                                <!--pic end-->
+                                <div class="row g-1">
+                                    <div class="col-sm-12">
+                                        <label asp-for="PatientSymptomsPositiveForDiphtheria" class="control-label"></label>
+                                        <textarea asp-for="PatientSymptomsPositiveForDiphtheria" class="form-control" style="height:100px;"></textarea>
+                                        <span asp-validation-for="PatientSymptomsPositiveForDiphtheria" class="text-danger"></span>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+
+
+
+
+                <div class="section px-4 py-5 my-5 text-center rounded-3 border shadow-lg" style="padding: 6px; margin-bottom: 8px; background-color: aliceblue;">
+
+                    <!--
+                    <span class="tab-content text-dark" style="background-color: #f9d203;">Date Info:</span>
+                    -->
+                    <br />
+                    <div class="col" style="">
+                        <div class="card sm-3" style="">
+
+
+                            <div class="icon text-primary">
+                                <img src="~/logo/health_and_safety_80dp_white.png" class="img-thumbnail" height="80" />
+                            </div>
+
+                            <div class="card-body" style="text-align:left;">
+                                <h5 class="card-title">Date Information</h5>
+                                <p class="card-text">
+                                    <small class="text-muted">
+                                        Please Fill Date Information:
+                                    </small>
+                                </p>
+
+                                <div class="row g-3">
+                                    <div class="col-sm-12">
+                                        <label asp-for="DateofFirstClinicalDiagnosis" class="label"></label>
+                                        <input asp-for="DateofFirstClinicalDiagnosis" class="form-control" />
+                                        <span asp-validation-for="DateofFirstClinicalDiagnosis" class="text-danger"></span>
+                                    </div>
+                                    <div class="col-sm">
+                                        <label asp-for="DateSymptomsOnset" class="label"></label>
+                                        <input asp-for="DateSymptomsOnset" class="form-control" />
+                                        <span asp-validation-for="DateSymptomsOnset" class="text-danger"></span>
+                                    </div>
+                                    @{
+                                    //<div class="col-sm">
+                                    //    <label asp-for="DateOnsetOfRash" class="label"></label>
+                                    //    <input asp-for="DateOnsetOfRash" class="form-control" />
+                                    //    <span asp-validation-for="DateOnsetOfRash" class="text-danger"></span>
+                                    //</div>
+                                    }
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+
+
+
+                <div class="card px-4 py-5 my-5 text-center rounded-3 border shadow-lg" style="padding: 6px; margin-bottom: 8px; background-color: aliceblue;">
+
+
+                    <h5 class="card-title">Please Upload Rash Image:</h5>
+
+
+                    <div class="form-group" style="padding: 16px;">
+
+                        <label asp-for="PatientDiphtheriaPicture" class="control-label">Rash Image Upload</label>
+                        <img id="patientRashPicture" style="width: 300px; height: 200px; margin: 8px; object-fit: cover;" src="">
+
+                        <input type="file"
+                                accept=".png,.jpg,.jpeg,.gif,.tif"
+                               asp-for="PatientDiphtheriaPicture"
+                                name="patientRashPicture"
+                                class="form-control"
+                                style=""
+                                onchange="document.getElementById('patientRashPicture').src = window.URL.createObjectURL(this.files[0])" />
+
+
+                        <span asp-validation-for="PatientDiphtheriaPicture " class="text-danger"></span>
+
+                    </div>
+                </div>
+
+                <div class="form-group" style="text-align:center;">
+                    <!--  <input type="submit" value="Create" class="btn btn-primary" />-->
+                    <input type="submit" value="Create" class="btn btn-success btn-lg px-4 gap-3" style="width: 250px;" />
+
+                </div>
+            </form>
+        </div>
+    </div>
+
+
+
+
+
+
+
+    <!----------------------------Diphera start-------------------------------------->
+    <!--scrolspy---------------------------->
+    <div class="col-lg-12 container my-5">
+        <div class="row p-4 pb-0 pe-lg-0 pt-lg-5 align-items-center rounded-3 border shadow-lg">
+
+
+
+            <nav id="navbar-example2" class="navbar bg-body-tertiary px-3 mb-3">
+                <a class="navbar-brand" href="#" style="color:black;">Diphtheria Patient Form</a>
+
+                <!--
+                <ul class="nav nav-pills">
+                    <li class="nav-item" style="color:black;">
+                        <a class="nav-link" href="#scrollspyHeading1">About The Diphtheria Form</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#scrollspyHeading2">Diphtheria Symptoms and Transmission</a>
+                    </li>
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" data-bs-toggle="dropdown" href="#" style="background-color: #004d93; color:white;" role="button" aria-expanded="false">Diphtheria</a>
+                        <ul class="dropdown-menu">
+                            <li><a class="dropdown-item" href="#scrollspyHeading3">Treatment</a></li>
+                            <li><a class="dropdown-item" href="#scrollspyHeading4">New</a></li>
+                            <li><hr class="dropdown-divider"></li>
+
+                            <li><a class="dropdown-item" href="#scrollspyHeading5">Diphtheria Gallery</a></li>
+                        </ul>
+                    </li>
+                </ul>
+                -->
+
+                <div class="btn btn-outline-primary" style="padding:8px; margin-bottom:2px;">Diphtheria Case Form</div>
+
+            </nav>
+
+
+
+            <div data-bs-spy="scroll" data-bs-target="#navbar-example2" data-bs-root-margin="0px 0px -40%" data-bs-smooth-scroll="true" class="scrollspy-example bg-body-tertiary p-3 rounded-2" tabindex="0">
+                <h4 id="scrollspyHeading1">Overview</h4>
+
+                <div class="row featurette">
+                    <div class="col-md-7">
+                        <h2 class="featurette-heading fw-normal lh-1">
+                            Diphtheria
+                            <span class="text-body-secondary"></span>
+                        </h2>
+                        <p class="lead">
+                            Overview
+                        </p>
+
+                        <p class="text-sm-start">
+                            Diphtheria (dif-THEER-e-uh) is a serious bacterial infection that usually affects the mucous membranes of the nose and throat.
+                            Diphtheria is extremely rare in the United States and other developed countries thanks to widespread vaccination against the disease.
+
+                            However, many countries with limited health care or vaccination options still experience high rates of diphtheria.
+
+                            Diphtheria can be treated with medications. But in advanced stages, diphtheria can damage the heart, kidneys and nervous system. Even with treatment, diphtheria can be deadly, especially in children.
+
+                            <cite>Mayo Clinic</cite>
+                        </p>
+
+                    </div>
+
+                    <div class="col-md-5">
+                        <img class="bd-placeholder-img bd-placeholder-img-lg featurette-image img-fluid mx-auto" src="~/images/pics_diphtheria/diphtheria-8.jpg" role="img" aria-label="Placeholder: 500x500" preserveAspectRatio="xMidYMid slice" focusable="false" />
+                    </div>
+                </div>
+
+
+
+                <br />
+
+
+
+                <!--Gallery -->
+                <hr class="featurette-divider">
+
+                <h5 class="featurette-heading fw-normal lh-1" style="text-align:center;">
+                    Diphtheria Images
+                    <span class="text-body-secondary" style="font:small;">Cite Images</span>
+                </h5>
+                <div class="col-lg-12 mx-auto">
+                    <div id="carouselExampleCaptions2" class="carousel slide col-lg-9 mx-auto" style="padding: 8px; margin-bottom: 1px;">
+                        <div class="carousel-indicators">
+                            <button type="button" data-bs-target="#carouselExampleCaptions2" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
+                            <button type="button" data-bs-target="#carouselExampleCaptions2" data-bs-slide-to="1" aria-label="Slide 2"></button>
+                            <button type="button" data-bs-target="#carouselExampleCaptions2" data-bs-slide-to="2" aria-label="Slide 3"></button>
+
+                            <button type="button" data-bs-target="#carouselExampleCaptions2" data-bs-slide-to="3" aria-label="Slide 4"></button>
+                            <button type="button" data-bs-target="#carouselExampleCaptions2" data-bs-slide-to="4" aria-label="Slide 5"></button>
+                            <button type="button" data-bs-target="#carouselExampleCaptions2" data-bs-slide-to="5" aria-label="Slide 6"></button>
+                            <button type="button" data-bs-target="#carouselExampleCaptions2" data-bs-slide-to="6" aria-label="Slide 7"></button>
+
+                        </div>
+                        <div class="carousel-inner">
+                            <div class="carousel-item active">
+                                <img src="~/images/pics_diphtheria/diphtheria-4.jpg" class="card-img img-fluid" width="600" height="900" style="aspect-ratio: auto;" preserveAspectRatio="xMidYMid slice" loading="lazy" alt="...">
+                                <div class="carousel-caption d-none d-md-block">
+                                    <h5></h5>
+                                    <p></p>
+                                </div>
+                            </div>
+                            <div class="carousel-item">
+                                <img src="~/images/pics_diphtheria/diphtheria-2.jpg" class="card-img img-fluid" width="600" height="900" style="aspect-ratio: auto;" preserveAspectRatio="xMidYMid slice" loading="lazy" alt="...">
+                                <div class="carousel-caption d-none d-md-block">
+                                    <h5></h5>
+                                    <p></p>
+                                </div>
+                            </div>
+                            <div class="carousel-item">
+                                <img src="~/images/pics_diphtheria/diphtheria-3.jpg" class="card-img img-fluid" width="600" height="900" style="aspect-ratio: auto;" preserveAspectRatio="xMidYMid slice" loading="lazy" alt="...">
+                                <div class="carousel-caption d-none d-md-block">
+                                    <h5></h5>
+                                    <p></p>
+                                </div>
+                            </div>
+
+
+
+
+                            <div class="carousel-item">
+                                <img src="~/images/pics_diphtheria/diphtheria-5.jpg" class="card-img img-fluid" width="600" height="900" style="aspect-ratio: auto;" preserveAspectRatio="xMidYMid slice" loading="lazy" alt="...">
+                                <div class="carousel-caption d-none d-md-block">
+                                    <h5></h5>
+                                    <p></p>
+                                </div>
+                            </div>
+                            <div class="carousel-item">
+                                <img src="~/images/pics_diphtheria/diphtheria-6.jpg" class="card-img img-fluid" width="600" height="900" style="aspect-ratio: auto;" preserveAspectRatio="xMidYMid slice" loading="lazy" alt="...">
+                                <div class="carousel-caption d-none d-md-block">
+                                    <h5></h5>
+                                    <p></p>
+                                </div>
+                            </div>
+                            <div class="carousel-item">
+                                <img src="~/images/pics_diphtheria/diphtheria-7.jpg" class="card-img img-fluid" width="600" height="900" style="aspect-ratio: auto;" preserveAspectRatio="xMidYMid slice" loading="lazy" alt="...">
+                                <div class="carousel-caption d-none d-md-block">
+                                    <h5></h5>
+                                    <p></p>
+                                </div>
+                            </div>
+                            <div class="carousel-item">
+                                <img src="~/images/pics_diphtheria/diphtheria-8.jpg" class="card-img img-fluid" width="600" height="900" style="aspect-ratio: auto;" preserveAspectRatio="xMidYMid slice" loading="lazy" alt="...">
+                                <div class="carousel-caption d-none d-md-block">
+                                    <h5></h5>
+                                    <p></p>
+                                </div>
+                            </div>
+
+
+                        </div>
+                        <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleCaptions2" data-bs-slide="prev">
+                            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                            <span class="visually-hidden">Previous</span>
+                        </button>
+                        <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleCaptions2" data-bs-slide="next">
+                            <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                            <span class="visually-hidden">Next</span>
+                        </button>
+                    </div>
+
+                </div>
+                <!----------Gallery end----------->
+
+                <br />
+
+                <h4 id="scrollspyHeading2"><span class="btn btn-outline-secondary btn-lg px-4" type="button" style="color:black; border-color: black;" data-bs-toggle="collapse" data-bs-target="#collapseWidthExample" aria-expanded="false" aria-controls="collapseWidthExample">Symptoms and Transmission</span></h4>
+
+
+                <br />
+                <div class="collapse collapse" id="collapseWidthExample">
+
+
+                    <div class="row featurette">
+                        <div class="col-md-7">
+                            <h2 class="featurette-heading fw-normal lh-1">
+                                Diphtheria Symptoms and Transmission:
+                                <span class="text-body-secondary"></span>
+                            </h2>
+
+
+                            <p class="lead">
+                                Symptoms and Transmission:
+                            </p>
+
+                            <span>
+                                <cite>Mayo Clinic</cite>
+                            </span>
+                            <br />
+                            <p class="card-header">Diphtheria Symptoms:</p>
+                            <p>
+                                Symptoms
+                                Diphtheria signs and symptoms usually begin 2 to 5 days after a person becomes infected. Signs and symptoms may include:
+
+                                A thick, gray membrane covering the throat and tonsils
+                                A sore throat and hoarseness
+                                Swollen glands (enlarged lymph nodes) in the neck
+                                Difficulty breathing or rapid breathing
+                                Nasal discharge
+                                Fever and chills
+                                Tiredness
+                                In some people, infection with diphtheria-causing bacteria causes only a mild illness — or no obvious signs and symptoms at all. Infected people who stay unaware of their illness are known as carriers of diphtheria. They're called carriers because they can spread the infection without being sick themselves.
+
+
+
+                            </p>
+
+                            <p>
+                                <b>Skin (cutaneous) diphtheria:</b>
+                                A second type of diphtheria can affect the skin, causing pain, redness and swelling similar to other bacterial skin infections. Ulcers covered by a gray membrane also may be a sign of skin diphtheria.
+                            </p>
+
+                            <p>
+                                Although it's more common in tropical climates, diphtheria on the skin also occurs in the United States. It may happen especially among people with poor hygiene who live in crowded conditions.
+                            </p>
+                            <br />
+
+                            <div class="card-group">
+                                <b>Incubation Period:</b>
+                                Diphtheria signs and symptoms usually begin 2 to 5 days after a person becomes infected.
+                                When to see a doctor
+                                Call your family doctor immediately if you or your child has been exposed to someone with diphtheria. If you're not sure whether your child has been vaccinated against diphtheria, schedule an appointment. Make sure your own vaccinations are current
+                                <br />
+                            </div>
+
+                            <br />
+
+                            <div class="card-group" style="text-align: left;padding: 8px;">
+
+                                <ul class="list-group">
+                                    <li style="list-style:none;"><b>Symptoms:</b></li>
+                                    <li>A thick, gray membrane covering the throat and tonsils</li>
+                                    <li>A sore throat and hoarseness</li>
+                                    <li>Swollen glands (enlarged lymph nodes) in the neck</li>
+                                    <li>Difficulty breathing or rapid breathing</li>
+                                    <li>Nasal discharge</li>
+                                    <li>Fever and chills</li>
+                                    <li>Tiredness</li>
+                                    <li>
+                                        <i>
+                                            Skin (cutaneous) diphtheria
+                                            A second type of diphtheria can affect the skin, causing pain, redness and swelling similar to other bacterial skin infections. Ulcers covered by a gray membrane also may be a sign of skin diphtheria.
+                                        </i>
+                                    </li>
+                                </ul>
+
+                            </div>
+
+                            <br />
+                            <br />
+                            <p class="card-header">Transmission:</p>
+                            <p>
+                                <b>Diphtheria Primary Human-to-Human Transmission Pathways:</b>
+                                <br />
+                                <span>
+                                    <cite>cite Mayo Clinic</cite>
+                                </span>
+                                <br />
+                                <b>Causes: </b>
+                                Diphtheria is caused by the bacterium Corynebacterium diphtheriae. The bacterium usually multiplies on or near the surface of the throat or skin. C. diphtheriae spreads through:
+
+                                Airborne droplets. When an infected person's sneeze or cough releases a mist of contaminated droplets, people nearby may inhale C. diphtheriae. Diphtheria spreads easily this way, especially in crowded conditions.
+                                Contaminated personal or household items. People sometimes catch diphtheria from handling an infected person's things, such as used tissues or hand towels, that may be contaminated with the bacteria.
+
+                                Touching an infected wound also can transfer diphtheria-causing bacteria.
+
+                                People who have been infected by the diphtheria bacteria and who haven't been treated can infect people who haven't had the diphtheria vaccine — even if they don't show any symptoms.
+
+                            </p>
+
+                            <p>
+                                <b>Risk factors: </b>
+                                People who are at increased risk of catching diphtheria include:
+
+                                Children and adults who don't have up-to-date vaccinations
+                                People living in crowded or unsanitary conditions
+                                Anyone who travels to an area where diphtheria infections are more common
+                                Diphtheria rarely occurs in the United States and Western Europe, where children have been vaccinated against the condition for decades. However, diphtheria is still common in developing countries where vaccination rates are low.
+
+                                In areas where diphtheria vaccination is standard, the disease is mainly a threat to unvaccinated or inadequately vaccinated people who travel internationally or have contact with people from less developed countries.
+                            </p>
+
+                            <p>
+                                <b>Complications: </b>
+                                Left untreated, diphtheria can lead to:
+
+                                Breathing problems. Diphtheria-causing bacteria may produce a toxin. This toxin damages tissue in the immediate area of infection — usually, the nose and throat. At that site, the infection produces a tough, gray membrane made up of dead cells, bacteria and other substances. This membrane can obstruct breathing.
+                                Heart damage. The diphtheria toxin may spread through the bloodstream and damage other tissues in the body. For example, it can damage the heart muscle, causing such complications as inflammation of the heart muscle (myocarditis). Heart damage from myocarditis may be slight or severe. At its worst, myocarditis can lead to heart failure and sudden death.
+                                Nerve damage. The toxin can also cause nerve damage. Typical targets are nerves to the throat, where poor nerve conduction may cause difficulty swallowing. Nerves to the arms and legs also may become inflamed, causing muscle weakness.
+
+                                If the diphtheria toxin damages the nerves that help control muscles used in breathing, these muscles may become paralyzed. At that point, you might need mechanical assistance to breathe.
+
+                                With treatment, most people with diphtheria survive these complications, but recovery is often slow. Diphtheria is fatal about 5% to 10% of the time. Rates of death are higher in children under age 5 or adults older than age 40.
+                            </p>
+                        </div>
+                        <div class="col-md-5">
+                            <img class="bd-placeholder-img bd-placeholder-img-lg featurette-image img-fluid mx-auto" src="~/images/pics_diphtheria/diphtheria-2.jpg" role="img" aria-label="Placeholder: 500x500" preserveAspectRatio="xMidYMid slice" focusable="false" />
+                        </div>
+                    </div>
+
+
+                </div>
+
+
+
+
+
+
+                <h4 id="scrollspyHeading3"><span class="btn btn-outline-secondary btn-lg px-4" style="color:black; border-color: black;" type="button" data-bs-toggle="collapse" data-bs-target="#collapseWidthExampleAboutUs" aria-expanded="false" aria-controls="collapseWidthExampleAboutUs">Treatment</span></h4>
+
+
+                <div class="collapse collapse" id="collapseWidthExampleAboutUs">
+
+
+                    <div class="row featurette">
+                        <div class="col-md-7">
+                            <h2 class="featurette-heading fw-normal lh-1">
+                                Diphtheria Treatment
+                                <span class="text-body-secondary"></span>
+                            </h2>
+                            <p class="lead">
+                                Treatment and Management Strategies
+                                <br />
+                                <span>
+                                    <small>
+                                        <cite>cite Mayo Clinic & WHO</cite>
+                                    </small>
+                                </span>
+                            </p>
+
+                            <p class="card-header">Treatment:</p>
+                            <div class="card-group">
+                                <p>
+                                    The risk of complications or death decrease considerably if appropriate treatment is provided early in the course of illness. For this reason, if diphtheria is suspected, testing to confirm the disease should be done promptly and treatment should be started as soon as possible.
+
+                                    Cases of diphtheria are usually treated with diphtheria antitoxin as well as antibiotics. Diphtheria specific antitoxin neutralizes circulation toxin in the blood. Detailed instructions for giving antitoxin can be found in the WHO treatment guidelines. Antibiotics stop bacterial replication and thereby toxin production, speed up getting rid of the bacteria and prevents transmission to others. However, many current strains of diphtheria have exhibited resistance to some commonly used antimicrobial drugs. Anyone that has had diphtheria should also receive vaccine after the acute phase of the illness is over.
+
+                                    Individuals who have been in contact with cases of diphtheria should be treated with antibiotics prophylactically to prevent illness. Their immunization status of all contacts should also be checked. If they are not fully vaccinated, they should also be offered vaccine.
+                                    <cite>cite WHO</cite>
+
+                                </p>
+
+                            </div>
+
+                            <div class="card-group">
+
+                                <p>
+                                    <b>Prevention: </b>
+                                    Before antibiotics were available, diphtheria was a common illness in young children. Today, the disease is not only treatable but also preventable with a vaccine.
+
+                                    The diphtheria vaccine is usually combined with vaccines for tetanus and whooping cough (pertussis). The three-in-one vaccine is known as the diphtheria, tetanus and pertussis vaccine. The latest version of this vaccine is known as the DTaP vaccine for children and the Tdap vaccine for adolescents and adults.
+
+                                    The diphtheria, tetanus and pertussis vaccine is one of the childhood vaccinations that doctors in the United States recommend during infancy. Vaccination consists of a series of five shots, typically administered in the arm or thigh, given to children at these ages:
+
+                                    2 months
+                                    4 months
+                                    6 months
+                                    15 to 18 months
+                                    4 to 6 years
+                                    The diphtheria vaccine is effective at preventing diphtheria. But there may be some side effects. Some children may experience a mild fever, fussiness, drowsiness or tenderness at the injection site after a DTaP shot. Ask your doctor what you can do for your child to minimize or relieve these effects.
+
+                                    Complications are very rare. In rare cases, the DTaP vaccine causes serious but treatable complications in a child, such as an allergic reaction (hives or a rash develops within minutes of the injection).
+
+                                    Some children — such as those with epilepsy or another nervous system condition — may not be able to get the DTaP vaccine.
+
+                                    Booster shots
+                                    After the initial series of vaccinations in childhood, you need booster shots of the diphtheria vaccine to help you maintain your immunity. That's because immunity to diphtheria fades with time.
+
+                                    Children who received all of the recommended vaccinations before age 7 should receive their first booster shot at around age 11 or 12. The next booster shot is recommended 10 years later, then repeated at 10-year intervals. Booster shots are particularly important if you travel to an area where diphtheria is common.
+
+                                    The booster is given as a Tdap vaccine or as a diphtheria booster combined with the tetanus booster — the tetanus-diphtheria (Td) vaccine. This combination vaccine is given by injection, usually into the arm or thigh.
+
+                                    The vaccine for Tdap is an alternative vaccine for adolescents ages 11 through 18 and adults who haven't previously had a booster. It's also recommended once during pregnancy, regardless of previous vaccinations.
+
+                                    Talk to your doctor about vaccines and booster shots if you're unsure of your vaccination status. A Tdap vaccine may also be recommended as part of the Td series for children ages 7 through 10 who aren't up to date with the vaccine schedule.
+                                    <cite>cite Mayo Clinic</cite>
+
+                                </p>
+
+                            </div>
+
+                        </div>
+                        <div class="col-md-5">
+                            <img class="bd-placeholder-img bd-placeholder-img-lg featurette-image img-fluid mx-auto" width="500" height="500" src="~/images/pics_diphtheria/diphtheria-3.jpg" role="img" aria-label="Placeholder: 500x500" preserveAspectRatio="xMidYMid slice" focusable="false" />
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            </<div>
+            </div>
+        </div>
+
+            <!--end scrolspy-------------------------->
+
+
+
+
+
+
+</div>
+    <!----------------------------Diphera end-------------------------------------->
+
+
+<div>
+    <a asp-action="Index">Back to List</a>
+</div>
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}

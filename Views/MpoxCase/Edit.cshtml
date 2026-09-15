@@ -1,0 +1,197 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+}
+
+@model AuthApp.Models.MpoxCase
+
+@{
+    ViewData["Title"] = "Edit";
+}
+
+
+<div class="badge">
+    <p style="color:red;">
+        @ViewBag.FileStats;
+    </p>
+</div>
+
+
+<h1>Edit</h1>
+
+<h4>MpoxCase</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Edit" enctype="multipart/form-data">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <input type="hidden" asp-for="Id" />
+            <div class="form-group">
+                <label asp-for="NameOfTreatingPhysician" class="control-label"></label>
+                <input asp-for="NameOfTreatingPhysician" class="form-control" />
+                <span asp-validation-for="NameOfTreatingPhysician" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="NameOfHealthcareCentre" class="control-label"></label>
+                <input asp-for="NameOfHealthcareCentre" class="form-control" />
+                <span asp-validation-for="NameOfHealthcareCentre" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="HealthcareCentreTelephone" class="control-label"></label>
+                <input asp-for="HealthcareCentreTelephone" class="form-control" />
+                <span asp-validation-for="HealthcareCentreTelephone" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="PatientFirstName" class="control-label"></label>
+                <input asp-for="PatientFirstName" class="form-control" />
+                <span asp-validation-for="PatientFirstName" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="PatientLastName" class="control-label"></label>
+                <input asp-for="PatientLastName" class="form-control" />
+                <span asp-validation-for="PatientLastName" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="PatientAge" class="control-label"></label>
+                <input asp-for="PatientAge" class="form-control" />
+                <span asp-validation-for="PatientAge" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="PatientSex" class="control-label"></label>
+                <input asp-for="PatientSex" class="form-control" />
+                <span asp-validation-for="PatientSex" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="PatientCountry" class="control-label"></label>
+                <input asp-for="PatientCountry" class="form-control" />
+                <span asp-validation-for="PatientCountry" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="PatientTelephoneNumber" class="control-label"></label>
+                <input asp-for="PatientTelephoneNumber" class="form-control" />
+                <span asp-validation-for="PatientTelephoneNumber" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="PatientCity" class="control-label"></label>
+                <input asp-for="PatientCity" class="form-control" />
+                <span asp-validation-for="PatientCity" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="PatientAddress" class="control-label"></label>
+                <input asp-for="PatientAddress" class="form-control" />
+                <span asp-validation-for="PatientAddress" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="PatientHouseHoldSize" class="control-label"></label>
+                <input asp-for="PatientHouseHoldSize" class="form-control" />
+                <span asp-validation-for="PatientHouseHoldSize" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="PatientSymptomsPositiveForMpox" class="control-label"></label>
+                <input asp-for="PatientSymptomsPositiveForMpox" class="form-control" />
+                <span asp-validation-for="PatientSymptomsPositiveForMpox" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="DateofFirstClinicalDiagnosis" class="control-label"></label>
+                <input asp-for="DateofFirstClinicalDiagnosis" class="form-control" />
+                <span asp-validation-for="DateofFirstClinicalDiagnosis" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="DateSymptomsOnset" class="control-label"></label>
+                <input asp-for="DateSymptomsOnset" class="form-control" />
+                <span asp-validation-for="DateSymptomsOnset" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="DateOnsetOfRash" class="control-label"></label>
+                <input asp-for="DateOnsetOfRash" class="form-control" />
+                <span asp-validation-for="DateOnsetOfRash" class="text-danger"></span>
+            </div>
+
+            <!-- old pic
+            <div class="form-group" style="padding: 16px;">
+                <label asp-for="PatientRashPicture" class="control-label"></label>
+                <img id="patientRashPicture" style="width:200px;height:200px; object-fit:cover" src="">
+
+                <input type="file"
+                        accept=".png,.jpg,.jpeg,.gif,.tif"
+                        asp-for="PatientRashPicture"
+                        name="patientRashPicture"
+                        class="form-control"
+                        style=""
+                        onchange="document.getElementById('patientRashPicture').src = window.URL.createObjectURL(this.files[0])" />
+
+
+                <span asp-validation-for="PatientRashPicture" class="text-danger"></span>
+
+            </div>
+            -->
+            @{
+                @if (Model.PatientRashPicture == null)
+                {
+                    <h6>Update Image:</h6>
+                    <div class="form-group" style="padding: 16px;">
+                        <label asp-for="PatientRashPicture" class="control-label"></label>
+                        <img id="patientRashPicture" style="width:200px;height:200px; object-fit:cover" src="">
+
+                
+
+                        <input type="file"
+                               accept=".png,.jpg,.jpeg,.gif,.tif"
+                               asp-for="PatientRashPicture"
+                               name="patientRashPicture"
+                               class="form-control"
+                               style=""
+                               onchange="document.getElementById('patientRashPicture').src = window.URL.createObjectURL(this.files[0])" />
+
+
+                        <span asp-validation-for="PatientRashPicture" class="text-danger"></span>
+
+                    </div>
+
+                }
+            }
+
+            @{
+                @if (Model.PatientRashPicture != null)
+                {
+                    <div class="form-group">
+                        <img id="patientRashPicture" style="width:200px;height:200px; object-fit:cover" src="data:image/*;base64,@(Convert.ToBase64String(Model.PatientRashPicture))">
+                        <label asp-for="PatientRashPicture" class="control-label">Patient Image Clinical Diagnosis Date: @Model.DateofFirstClinicalDiagnosis</label>
+
+
+                    </div>
+
+                }
+            }
+
+
+
+
+
+            <div class="form-group">
+                <input type="submit" value="Save" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+@if (Model.PatientRashPicture != null)
+{
+  //  <code>
+  //      @foreach (byte i in @Model.PatientRashPicture)
+  //      {
+  //          i.ToString();
+      //  }
+  //  </code>
+    // use viewbag
+}
+<div>
+    <a asp-action="Index">Back to List</a>
+</div>
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}

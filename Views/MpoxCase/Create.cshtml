@@ -1,0 +1,542 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+}
+
+@model AuthApp.Models.MpoxCase
+
+
+<style>
+
+    .card {
+        position: relative;
+        display: block;
+        flex-direction: column;
+        min-width: 0;
+        word-wrap: break-word;
+        background-color: gainsboro;
+        color: black;
+        background-clip: border-box;
+        border: 1px solid rgba(0, 0, 0, .125);
+        border-radius: .25rem;
+    }
+
+    <!-- heros-- >
+    .bd-placeholder-img {
+        font-size: 1.125rem;
+        text-anchor: middle;
+        -webkit-user-select: none;
+        -moz-user-select: none;
+        user-select: none;
+    }
+
+    {
+        font-size: 3.5rem;
+    }
+
+    }
+
+    .b-example-divider {
+        width: 100%;
+        height: 3rem;
+        background-color: rgba(0, 0, 0, .1);
+        border: solid rgba(0, 0, 0, .15);
+        border-width: 1px 0;
+        box-shadow: inset 0 .5em 1.5em rgba(0, 0, 0, .1), inset 0 .125em .5em rgba(0, 0, 0, .15);
+    }
+
+    .b-example-vr {
+        flex-shrink: 0;
+        width: 1.5rem;
+        height: 100vh;
+    }
+
+    .bi {
+        vertical-align: -.125em;
+        fill: currentColor;
+    }
+
+    .nav-scroller {
+        position: relative;
+        z-index: 2;
+        height: 2.75rem;
+        overflow-y: hidden;
+    }
+
+        .nav-scroller .nav {
+            display: flex;
+            flex-wrap: nowrap;
+            padding-bottom: 1rem;
+            margin-top: -1px;
+            overflow-x: auto;
+            text-align: center;
+            white-space: nowrap;
+            -webkit-overflow-scrolling: touch;
+        }
+
+    .btn-bd-primary {
+        --bd-violet-bg: #712cf9;
+        --bd-violet-rgb: 112.520718, 44.062154, 249.437846;
+        --bs-btn-font-weight: 600;
+        --bs-btn-color: var(--bs-white);
+        --bs-btn-bg: var(--bd-violet-bg);
+        --bs-btn-border-color: var(--bd-violet-bg);
+        --bs-btn-hover-color: var(--bs-white);
+        --bs-btn-hover-bg: #6528e0;
+        --bs-btn-hover-border-color: #6528e0;
+        --bs-btn-focus-shadow-rgb: var(--bd-violet-rgb);
+        --bs-btn-active-color: var(--bs-btn-hover-color);
+        --bs-btn-active-bg: #5a23c8;
+        --bs-btn-active-border-color: #5a23c8;
+    }
+
+    .bd-mode-toggle {
+        z-index: 1500;
+    }
+
+        .bd-mode-toggle .dropdown-menu .active .bi {
+            display: block !important;
+        }
+
+
+    .accordion-button:focus {
+        z-index: 3;
+        border-color: #86b7fe;
+        outline: 0;
+        box-shadow: 0 0 0 .25rem rgba(13, 110, 253, .25);
+    }
+
+    .accordion-button:not(.collapsed) {
+        color: #0c63e4;
+        background-color: #e7f1ff;
+        box-shadow: inset 0 -1px 0 rgba(0, 0, 0, .125);
+    }
+
+    .carousel-control-next-icon {
+        background-image: url(data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16' fill='%23fff'%3e%3cpath d='M4.646 1.646a.5.5 0 0 1 .708 0l6 6a.5.5 0 0 1 0 .708l-6 6a.5.5 0 0 1-.708-.708L10.293 8 4.646 2.354a.5.5 0 0 1 0-.708z'/%3e%3c/svg%3e);
+        background-color: black;
+    }
+
+    .carousel-control-prev-icon {
+        background-image: url(data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16' fill='%23fff'%3e%3cpath d='M11.354 1.646a.5.5 0 0 1 0 .708L5.707 8l5.647 5.646a.5.5 0 0 1-.708.708l-6-6a.5.5 0 0 1 0-.708l6-6a.5.5 0 0 1 .708 0z'/%3e%3c/svg%3e);
+        background-color: black;
+    }
+
+
+
+    <!--.label {
+        display: inline-block;
+        font-weight: 300;
+        font-size:12px;
+    }-->
+    .label {
+        display: inline-block;
+        font-weight: normal;
+    }
+
+    .badge {
+        display: block;
+        padding: .35em .65em;
+        font-size: .75em;
+        font-weight: 700;
+        line-height: 1;
+        color: #fff;
+        text-align: center;
+        white-space: nowrap;
+        vertical-align: baseline;
+        border-radius: .25rem;
+    }
+
+    .img-thumbnail {
+        padding: .25rem;
+        background-color: #fff;
+        border: 1px solid #dee2e6;
+        border-radius: .25rem;
+        max-width: 100%;
+        height: auto;
+        float: right;
+    }
+
+</style>
+
+
+
+
+
+
+<h1>Create</h1>
+
+
+<div class="badge">
+    <p style="color:red;">
+        @ViewBag.FileStats
+    </p>
+</div>
+
+
+<h4>MpoxCase</h4>
+<hr />
+
+<div class="container-fluid">
+<div class="row">
+    <div class="col-md-12">
+        <form asp-action="Create" enctype="multipart/form-data">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
+
+            <div class="section px-4 py-5 my-5 text-black-50 rounded-3 border shadow-lg" style="background-color: aliceblue;">
+
+                <!--
+                <span class="badge text-dark" style="background-color: #9acbff;">Doctor Info</span>
+                <br />
+                -->
+                <!--#3232323b;-->
+          
+                <div class="col">
+
+                    <div class="card sm-3" style="">
+
+                        <div class="icon text-primary">
+                            <i class="fas fa-dollar-sign"></i>
+                            <img src="~/logo/health_and_safety_80dp_white.png" class="img-thumbnail" height="80" />
+                        </div>
+                    <!--padding: 6px; margin-bottom: 8px;-->
+
+                        <div class="card-body" style="text-align:unset;">
+                            <h5 class="card-title">Doctor Information:</h5>
+                            <p class="card-text">
+                                <small class="text-muted">
+                                 Please fill Doctor Information:
+                                </small>
+                            </p>
+                                
+
+                            <div class="row g-3">
+                                <div class="col-sm-12">
+                                        <label asp-for="NameOfTreatingPhysician" class="control-label"></label>
+                                        <input asp-for="NameOfTreatingPhysician" class="form-control" />
+                                        <span asp-validation-for="NameOfTreatingPhysician" class="text-danger"></span>
+                                </div>
+                                <div class="col-sm-4">
+                                        <label asp-for="NameOfHealthcareCentre" class="control-label"></label>
+                                        <input asp-for="NameOfHealthcareCentre" class="form-control" />
+                                        <span asp-validation-for="NameOfHealthcareCentre" class="text-danger"></span>
+                                </div>
+                                <div class="col-sm-4">
+                                    <label asp-for="HealthcareCentreTelephone" class="control-label"></label>
+                                        <input asp-for="HealthcareCentreTelephone" class="form-control" />
+                                        <span asp-validation-for="HealthcareCentreTelephone" class="text-danger"></span>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+            </div>
+            </div>
+
+
+
+            <div class="section px-4 py-5 my-5 text-center rounded-3 border shadow-lg" style="padding: 6px; margin-bottom: 8px; background-color: aliceblue; color:black;">
+
+                <!--
+                <span class="badge text-dark" style="background-color: #ff9afb">Patient Info:</span>
+                <br/>
+
+                -->
+                <div class="col">
+                    <div class="card sm-3">
+
+                        <div class="icon text-primary">
+                            <i class="fas fa-dollar-sign"></i>
+                            <img src="~/logo/health_and_safety_80dp_white.png" class="img-thumbnail" height="80" />
+                        </div>
+
+
+                        <div class="card-body" style="text-align:left;">
+                            <h5 class="card-title">Paitent Information:</h5>
+                            <p class="card-text">
+                                <small class="text-black-50">
+                                    Please Fill Patient Information:
+                                </small>
+                            </p>
+
+
+                            <div class="row g-3">
+                                <div class="col-sm-7">
+                                        <label asp-for="PatientFirstName" class="control-label"></label>
+                                        <input asp-for="PatientFirstName" class="form-control" />
+                                        <span asp-validation-for="PatientFirstName" class="text-danger"></span>
+                                </div>
+                                <div class="col-sm">
+                                        <label asp-for="PatientLastName" class="control-label"></label>
+                                        <input asp-for="PatientLastName" class="form-control" />
+                                        <span asp-validation-for="PatientLastName" class="text-danger"></span>
+                                </div>
+                                <div class="col-sm">
+                                        <label asp-for="PatientAge" class="control-label"></label>
+                                        <input asp-for="PatientAge" class="form-control" />
+                                        <span asp-validation-for="PatientAge" class="text-danger"></span>
+                                </div>
+                            </div>
+
+
+                            <div class="row g-3">
+                                <div class="col-sm-3">
+                                        <label asp-for="PatientSex" class="control-label"></label>
+                                        <input asp-for="PatientSex" class="form-control" />
+                                        <span asp-validation-for="PatientSex" class="text-danger"></span>
+                                </div>
+
+                                <div class="col-sm">
+                                        <label asp-for="PatientCountry" class="control-label"></label>
+                                        <input asp-for="PatientCountry" class="form-control" />
+                                        <span asp-validation-for="PatientCountry" class="text-danger"></span>
+                                </div>
+
+                                <div class="col-sm">
+                                        <label asp-for="PatientTelephoneNumber" class="control-label"></label>
+                                        <input asp-for="PatientTelephoneNumber" class="form-control" />
+                                        <span asp-validation-for="PatientTelephoneNumber" class="text-danger"></span>
+                                </div>
+                            </div>
+
+                            <div class="row g-3">
+                                <div class="col-sm-3">
+                                        <label asp-for="PatientCity" class="control-label"></label>
+                                        <input asp-for="PatientCity" class="form-control" />
+                                        <span asp-validation-for="PatientCity" class="text-danger"></span>
+                                </div>
+
+                                <div class="col-sm">
+                                        <label asp-for="PatientAddress" class="control-label"></label>
+                                        <input asp-for="PatientAddress" class="form-control" />
+                                        <span asp-validation-for="PatientAddress" class="text-danger"></span>
+                                </div>
+
+                                <div class="col-sm">
+                                        <label asp-for="PatientHouseHoldSize" class="control-label"></label>
+                                        <input asp-for="PatientHouseHoldSize" class="form-control" />
+                                        <span asp-validation-for="PatientHouseHoldSize" class="text-danger"></span>
+                                </div>
+                            </div>
+
+
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+    
+
+
+            <div class="section px-4 py-5 my-5 text-center rounded-3 border shadow-lg" style="padding: 6px; margin-bottom: 8px; background-color: aliceblue;">
+
+                <!--
+                <span class="badge text-dark" style="background-color: #ff656ac9;">Symptom Info:</span>
+
+                -->
+                <div class="col">
+                    <div class="card col-sm-12" style="">
+
+
+                        <div class="icon text-primary">
+                            <i class="fas fa-dollar-sign"></i>
+                            <img src="~/logo/health_and_safety_80dp_white.png" class="img-thumbnail" height="80" />
+                        </div>
+
+                        <div class="card-body" style="text-align:left;">
+                            <h5 class="card-title">Symptom Information</h5>
+                            <p class="card-text">
+                                <small class="text-muted">
+                                    Please fill Symptoms information:
+                                </small>
+                            </p>
+
+                           <div class="card-body">
+                               <br/>
+                                    <h6>Signs and Symptoms of Mpox</h6>
+                                    <br/>
+                                    <cite>From CDC website</cite>
+                                    <p>
+                                    At a glance
+                                    People with mpox often get a rash and may have other symptoms like fever, chills, and swollen lymph nodes.
+                                    Symptoms usually start within 21 days of exposure.
+                                    Visit a healthcare provider if you have a new or unexplained rash, especially after contact with someone who has mpox.
+                                    Symptoms
+                                    People with mpox often get a rash that may be located on hands, feet, chest, face, or mouth or near the genitals, including penis, testicles, labia, and vagina, and anus. The incubation period is 3–17 days. During this time, a person does not have symptoms and may feel fine.
+
+                                    The rash will go through several stages, including scabs, before healing.
+                                    The rash can initially look like pimples or blisters and may be painful or itchy.
+                                    Mpox rash photos.
+                                    </p>
+                                    <br/>
+
+                                    <h6>Other symptoms of mpox can include:</h6>
+                                    <i style="font-size:smaller;">See photos of different types of mpox rashes.</i>
+
+                                    <ul>
+                                    <li>Fever</li>
+                                    <li>Chills</li>
+                                    <li>Swollen lymph nodes</li>
+                                    <li>Exhaustion</li>
+                                    <li>Muscle aches and backache</li>
+                                    <li>Headache</li>
+                                    <li>Respiratory symptoms (e.g., sore throat, nasal congestion, or cough)</li>
+                                    <li>You may experience all or only a few symptoms.</li>
+
+                                    </ul>
+
+                           </div>
+                           
+                           <!--pic start-->
+                                <div id="carouselExampleCaptions" class="carousel slide col-lg-9 mx-auto">
+                                    <div class="carousel-indicators">
+                                        <button type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
+                                        <button type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide-to="1" aria-label="Slide 2"></button>
+                                        <button type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide-to="2" aria-label="Slide 3"></button>
+                                    </div>
+                                    <div class="carousel-inner">
+                                        <div class="carousel-item active">
+                                            <img src="~/images/monkeypox-rash01.png" class="card-img img-fluid" width="auto" height="auto" style="aspect-ratio: auto;" preserveAspectRatio="xMidYMid slice" loading="lazy" alt="...">
+                                            <div class="carousel-caption d-none d-md-block">
+                                                <h5></h5>
+                                                <p></p>
+                                            </div>
+                                        </div>
+                                        <div class="carousel-item">
+                                            <img src="~/images/monkeypox-rash02.png" class="card-img img-fluid" width="auto" height="auto" style="aspect-ratio: auto;" preserveAspectRatio="xMidYMid slice" loading="lazy" alt="...">
+                                            <div class="carousel-caption d-none d-md-block">
+                                                <h5></h5>
+                                                <p></p>
+                                            </div>
+                                        </div>
+                                        <div class="carousel-item">
+                                            <img src="~/images/monkeypox-rash04.png" class="card-img img-fluid" width="600" height="900" style="aspect-ratio: auto;" preserveAspectRatio="xMidYMid slice" loading="lazy" alt="...">
+                                            <div class="carousel-caption d-none d-md-block">
+                                                <h5></h5>
+                                                <p></p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide="prev">
+                                        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                                        <span class="visually-hidden">Previous</span>
+                                    </button>
+                                    <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide="next">
+                                        <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                                        <span class="visually-hidden">Next</span>
+                                    </button>
+                                </div>
+                           <!--pic end-->
+                           <div class="row g-1">
+                                <div class="col-sm-12">
+                                        <label asp-for="PatientSymptomsPositiveForMpox" class="control-label"></label>
+                                        <textarea asp-for="PatientSymptomsPositiveForMpox" class="form-control" style="height:100px;"></textarea>
+                                        <span asp-validation-for="PatientSymptomsPositiveForMpox" class="text-danger"></span>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+
+           
+
+
+            <div class="section px-4 py-5 my-5 text-center rounded-3 border shadow-lg" style="padding: 6px; margin-bottom: 8px; background-color: aliceblue;">
+
+                <!--
+                <span class="tab-content text-dark" style="background-color: #f9d203;">Date Info:</span>
+                -->
+               <br/>
+                <div class="col" style="">
+                    <div class="card sm-3" style="">
+
+
+                        <div class="icon text-primary">
+                            <img src="~/logo/health_and_safety_80dp_white.png" class="img-thumbnail" height="80" />
+                        </div>
+
+                        <div class="card-body" style="text-align:left;">
+                            <h5 class="card-title">Date Information</h5>
+                            <p class="card-text">
+                                <small class="text-muted">
+                                    Please Fill Date Information:
+                                </small>
+                            </p>
+
+                            <div class="row g-3">
+                                <div class="col-sm-12">
+                                        <label asp-for="DateofFirstClinicalDiagnosis" class="label"></label>
+                                        <input asp-for="DateofFirstClinicalDiagnosis" class="form-control" />
+                                        <span asp-validation-for="DateofFirstClinicalDiagnosis" class="text-danger"></span>
+                                </div>
+                                <div class="col-sm">
+                                        <label asp-for="DateSymptomsOnset" class="label"></label>
+                                        <input asp-for="DateSymptomsOnset" class="form-control" />
+                                        <span asp-validation-for="DateSymptomsOnset" class="text-danger"></span>
+                                </div>
+                                <div class="col-sm">
+                                        <label asp-for="DateOnsetOfRash" class="label"></label>
+                                        <input asp-for="DateOnsetOfRash" class="form-control" />
+                                        <span asp-validation-for="DateOnsetOfRash" class="text-danger"></span>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+
+
+
+            <div class="card px-4 py-5 my-5 text-center rounded-3 border shadow-lg" style="padding: 6px; margin-bottom: 8px; background-color: aliceblue;">
+            
+
+                <h5 class="card-title">Please Upload Rash Image:</h5>
+    
+
+                <div class="form-group" style="padding: 16px;">
+
+                <label asp-for="PatientRashPicture" class="control-label">Rash Image Upload</label>
+                    <img id="patientRashPicture" style="width: 300px; height: 200px; margin: 8px; object-fit: cover;" src="">
+
+                <input type="file"
+                       accept=".png,.jpg,.jpeg,.gif,.tif"
+                       asp-for="PatientRashPicture"
+                       name="patientRashPicture"
+                       class="form-control"
+                       style=""
+                       onchange="document.getElementById('patientRashPicture').src = window.URL.createObjectURL(this.files[0])" />
+
+
+                <span asp-validation-for="PatientRashPicture" class="text-danger"></span>
+
+            </div>
+            </div>
+
+            <div class="form-group" style="text-align:center;">
+                <!--  <input type="submit" value="Create" class="btn btn-primary" />-->
+                <input type="submit" value="Create" class="btn btn-success btn-lg px-4 gap-3" style="width: 250px;" />
+
+            </div>
+        </form>
+    </div>
+</div>
+
+
+
+</div>
+
+
+<div>
+    <a asp-action="Index">Back to List</a>
+</div>
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}

@@ -1,0 +1,1998 @@
+﻿@using AuthApp.Models
+@using Microsoft.AspNetCore.Identity
+@using System.Web
+@inject SignInManager<ApplicationUser> SignInManager
+@inject UserManager<ApplicationUser> UserManager
+
+@model AuthApp.Models.WelcomeForm
+
+
+@{
+    ViewData["Title"] = "Home Page";
+}
+
+
+<style>
+    .card {
+        position: relative;
+        display: block;
+        flex-direction: column;
+        min-width: 0;
+        word-wrap: break-word;
+        background-color: #fff;
+        background-clip: border-box;
+        border: 1px solid rgba(0,0,0,.125);
+        border-radius: .25rem;
+    }
+
+    <!-- heros-- >
+    .bd-placeholder-img {
+        font-size: 1.125rem;
+        text-anchor: middle;
+        -webkit-user-select: none;
+        -moz-user-select: none;
+        user-select: none;
+    }
+
+    {
+        font-size: 3.5rem;
+    }
+
+    }
+
+    .b-example-divider {
+        width: 100%;
+        height: 3rem;
+        background-color: rgba(0, 0, 0, .1);
+        border: solid rgba(0, 0, 0, .15);
+        border-width: 1px 0;
+        box-shadow: inset 0 .5em 1.5em rgba(0, 0, 0, .1), inset 0 .125em .5em rgba(0, 0, 0, .15);
+    }
+
+    .b-example-vr {
+        flex-shrink: 0;
+        width: 1.5rem;
+        height: 100vh;
+    }
+
+    .bi {
+        vertical-align: -.125em;
+        fill: currentColor;
+    }
+
+    .nav-scroller {
+        position: relative;
+        z-index: 2;
+        height: 2.75rem;
+        overflow-y: hidden;
+    }
+
+        .nav-scroller .nav {
+            display: flex;
+            flex-wrap: nowrap;
+            padding-bottom: 1rem;
+            margin-top: -1px;
+            overflow-x: auto;
+            text-align: center;
+            white-space: nowrap;
+            -webkit-overflow-scrolling: touch;
+        }
+
+    .btn-bd-primary {
+        --bd-violet-bg: #712cf9;
+        --bd-violet-rgb: 112.520718, 44.062154, 249.437846;
+        --bs-btn-font-weight: 600;
+        --bs-btn-color: var(--bs-white);
+        --bs-btn-bg: var(--bd-violet-bg);
+        --bs-btn-border-color: var(--bd-violet-bg);
+        --bs-btn-hover-color: var(--bs-white);
+        --bs-btn-hover-bg: #6528e0;
+        --bs-btn-hover-border-color: #6528e0;
+        --bs-btn-focus-shadow-rgb: var(--bd-violet-rgb);
+        --bs-btn-active-color: var(--bs-btn-hover-color);
+        --bs-btn-active-bg: #5a23c8;
+        --bs-btn-active-border-color: #5a23c8;
+    }
+
+    .bd-mode-toggle {
+        z-index: 1500;
+    }
+
+        .bd-mode-toggle .dropdown-menu .active .bi {
+            display: block !important;
+        }
+
+
+    .accordion-button:focus {
+        z-index: 3;
+        border-color: #86b7fe;
+        outline: 0;
+        box-shadow: 0 0 0 .25rem rgba(13, 110, 253, .25);
+    }
+
+    .accordion-button:not(.collapsed) {
+        color: #0c63e4;
+        background-color: #e7f1ff;
+        box-shadow: inset 0 -1px 0 rgba(0, 0, 0, .125);
+    }
+
+    .carousel-control-next-icon {
+        background-image: url(data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16' fill='%23fff'%3e%3cpath d='M4.646 1.646a.5.5 0 0 1 .708 0l6 6a.5.5 0 0 1 0 .708l-6 6a.5.5 0 0 1-.708-.708L10.293 8 4.646 2.354a.5.5 0 0 1 0-.708z'/%3e%3c/svg%3e);
+        background-color: black;
+    }
+
+    .carousel-control-prev-icon {
+        background-image: url(data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16' fill='%23fff'%3e%3cpath d='M11.354 1.646a.5.5 0 0 1 0 .708L5.707 8l5.647 5.646a.5.5 0 0 1-.708.708l-6-6a.5.5 0 0 1 0-.708l6-6a.5.5 0 0 1 .708 0z'/%3e%3c/svg%3e);
+        background-color: black;
+    }
+
+
+    .chart-container {
+        background: white;
+        border-radius: 20px;
+        padding: 30px;
+        box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+        margin: 20px 0;
+        transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+
+        .chart-container:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 25px 50px rgba(0, 0, 0, 0.15);
+        }
+
+    .controls {
+        background: rgba(255, 255, 255, 0.95);
+        border-radius: 15px;
+        padding: 20px;
+        margin-bottom: 30px;
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+    }
+
+    .btn-chart {
+        margin: 5px;
+        border-radius: 25px;
+        padding: 10px 20px;
+        font-weight: 600;
+        transition: all 0.3s ease;
+    }
+
+        .btn-chart:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        }
+
+    .stats-card {
+        background: linear-gradient(135deg, #ff6b6b, #ee5a24);
+        color: white;
+        border-radius: 15px;
+        padding: 25px;
+        text-align: center;
+        margin-bottom: 20px;
+        box-shadow: 0 10px 25px rgba(255, 107, 107, 0.3);
+    }
+
+        .stats-card h3 {
+            font-weight: 700;
+            margin-bottom: 10px;
+        }
+
+        .stats-card .number {
+            font-size: 2.5rem;
+            font-weight: 800;
+            text-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+        }
+
+</style>
+
+
+
+
+@{
+
+    //string name = "anon";
+    //string imgstr = "~/defaultpic.png";
+    //@if (SignInManager.IsSignedIn(User))
+    //{
+        //username
+        //name = @HttpUtility.JavaScriptStringEncode(@UserManager.GetUserAsync(User).Result.FirstName.Trim());
+
+        ///profile pic
+        ///if (@UserManager.GetUserAsync(User).Result.ProfilePicture == null)
+        ///{
+        ///    imgstr = "~/defaultpic.png";
+        ///}
+        ///if (@UserManager.GetUserAsync(User).Result.ProfilePicture != null)
+        ///{
+           /// imgstr =@(Convert.ToBase64String(UserManager.GetUserAsync(User).Result.ProfilePicture));
+        ///}
+               ;
+
+    //}
+
+    //@if (!SignInManager.IsSignedIn(User))
+    //{
+    //    name = "anon"; 
+        //imgstr = "~/defaultpic.png";
+
+    //}
+
+}
+
+
+
+
+
+<!--chat------------------------------------>
+<!--<div class="active"id="chatname0" >name.ToString()</div>
+
+<div class="nav-pills" id="chatname">
+    <img src="~/defaultpic.png" height="40px" width="40px" /> name.ToString()
+</div>-->
+
+
+
+<!--chat page body------------------------------------>
+<!--<div class="container">
+        <input type="text" id="message" />
+        <input type="button" id="sendmessage" value="Send" />
+    <ul style="list-style: none;" id="discussion"></ul>
+    </div>-->
+<!--chat page body------------------------------------>
+
+
+<!--Landing page body------------------------------------>
+<div class="container" style="padding:8px;">
+
+
+
+
+
+
+    <div class="b-example-divider"></div>
+
+    <div class="row">
+
+        <div class="px-4 py-5 my-5 text-center rounded-3 border shadow-lg">
+
+            <h1 class="display-5 fw-bold text-body-emphasis lh-1 mb-3">
+                <img class="d-block mx-auto mb-4 rounded-circle" src="~/logo/health_and_safety_200dp.png" width="100px" height="100px" style="border-color:darkslategrey;border-style: solid;">
+
+                <b>HDLS</b>
+            </h1>
+
+            <b style="font-size:24px;">Hospital Disease Logging System</b>
+
+
+            <hr class="featurette-divider">
+
+            <h6 style="text-align:center;">Dashboards</h6>
+
+            <div class="d-grid gap-2 d-sm-flex justify-content-sm-center">
+
+                <a type="button" class="btn btn-primary btn-lg px-4" asp-controller="ChikungunyaCase" asp-action="ChikungunyaDashBoard" style="background-color: #801111;">
+                    <b>Chikungunya Dashboard</b>
+                </a>
+
+
+                <a type="button" class="btn btn-primary btn-lg px-4" asp-controller="MpoxCase" asp-action="MpoxDashBoard" style="background-color: #3a2be2;">
+                         <b>Mpox Dashboard</b>
+                 </a>
+
+               <a type="button" class="btn btn-primary btn-lg px-4" asp-controller="DiphtheriaCase" asp-action="DiphtheriaDashBoard" style="background-color:blueviolet;">
+                    <b>Diphtheria Dashboard</b>
+                </a>
+
+                <a type="button" class="btn btn-primary btn-lg px-4" asp-controller="MeaslesCase" asp-action="MeaslesDashBoard" style="background-color: #0e722a;">
+                    <b>Measles Dashboard</b>
+                </a>
+            </div>
+
+            <hr class="featurette-divider">
+
+            <h6 style="text-align:center;">Forms</h6>
+
+            <div class="d-grid gap-2 d-sm-flex justify-content-sm-center">
+
+
+                <a type="button" class="btn btn-primary btn-lg px-4" asp-controller="ChikungunyaCase" asp-action="Create" style="background-color: #801111;">
+                    <b>Chikungunya Form</b>
+                </a>
+
+
+                <a type="button" class="btn btn-primary btn-lg px-4" asp-controller="MpoxCase" asp-action="Create" style="background-color: #3a2be2;">
+                    <b>Mpox Form</b>
+                </a>
+                <a type="button" class="btn btn-primary btn-lg px-4" asp-controller="DiphtheriaCase" asp-action="Create" style="background-color:blueviolet;">
+                    <b>Diphtheria Form</b>
+                </a>
+                <a type="button" class="btn btn-primary btn-lg px-4" asp-controller="MeaslesCase" asp-action="Create" style="background-color: #0e722a;">
+                    <b>Measles Form</b>
+                </a>
+            </div>
+
+
+
+            <!--Contact-->
+            <div class="collapse collapse" id="collapseWidthExampleContact">
+
+            </div>
+
+
+        </div>
+
+        <div class="b-example-divider"></div>
+
+
+
+        <div class="px-4 py-5 my-5 text-sm-center rounded-3 border shadow-lg">
+        <div class="card card-body">
+            <div class="col-lg-6 mx-auto">
+                <p class="lead mb-4"
+                   style="font-weight: 700;font-style:normal;"
+                   display-2 fw-bold text-body-emphasis lh-1 mb-3">
+                    Our vision is to catalog suspected cases of various contagious diseases
+                    that affect communities that do not currently have logging systems.
+                </p>
+
+                <p class="card-header-pills">
+                    <b>
+                        We are currently starting with Mpox, Diphtheria and Measles.
+                    </b>
+                </p>
+
+                <p class="blockquote">
+                    We currently use medical information sources provided by
+                    the <i>WHO, CDC and The Mayo Clinic.</i>
+                </p>
+
+                <p>As a healthcare worker you can read information and view images about the diseases.
+                        If you suspect a patient has a case of Mpox, Diphtheria or Measles,
+                        you can fill out the form by clicking on the create button. You can also view 
+                        the dashboard visualizations by clicking on the dashboard button attached to each disease card.
+                </p>
+
+                <p>Our current needs to make this project a success are translators and health care workers willing to participate in the alpha release
+                    of HDLS. We would also love your feedback on how to improve the application.
+                </p>
+            </div>
+        </div>
+        </div>
+
+        <div class="b-example-divider"></div>
+
+
+
+
+
+        <!---Chikungunya Card--------------------------->
+        <hr class="featurette-divider">
+
+        <div class="container col-xxl-8 px-4 py-5">
+            <div class="row flex-lg-row-reverse align-items-center g-5 py-5 rounded-3 border shadow-lg dark">
+                <div class="col-10 col-sm-8 col-lg-6">
+                    <img src="~/images/chikungunya-0001.jpg" class="d-block mx-sm-auto img-fluid" alt="Bootstrap Themes" width="800" height="600" loading="lazy">
+                </div>
+                <div class="col-lg-6">
+                    <h1 class="display-5 fw-bold text-body-emphasis lh-1 mb-3">
+                        <i>Chikungunya Background:</i> <b></b>
+                    </h1>
+                    <p class="lead">
+                        Overview Chikungunya
+                    </p>
+                    <ul class="list-group-flush">
+                        <li>
+                            <b>Description</b>:
+                            <br />
+                            Chikungunya is a mosquito-borne viral disease that causes fever and severe joint pain. It is caused by a ribonucleic acid (RNA) virus that belongs to the alphavirus genus of the family Togaviridae. The name “chikungunya” derives from a word in the Kimakonde language of southern Tanzania, meaning “that which bends up” and describes the stooped appearance of infected people with severe joint pain (arthralgia).
+
+                            Chikungunya virus (CHIKV) is transmitted to humans by the bites of infected female mosquitoes, most commonly Aedes aegypti and Aedes albopictus mosquitoes. These two species can also transmit other viruses, including dengue and Zika viruses. They bite primarily during daylight hours, and there may be peaks of activity in the early morning and late afternoon.
+
+                            CHIKV was first identified in the United Republic of Tanzania in 1952 and subsequently in other countries in Africa and Asia. Urban outbreaks were first recorded in Asia in the 1970s, but since 2004, outbreaks of CHIKV have become more frequent and widespread. The first local, mosquito-transmitted chikungunya cases in the Americas were reported in late 2013, after which large outbreaks occurred affecting most of the countries in the region. Chikungunya has now been reported in >110 countries in Asia, Africa, the Americas and Europe.
+
+                            <br />
+                            <cite style="font-size:12px;">
+                                link:
+                                https://www.who.int/health-topics/chikungunya/#tab=tab_1
+                            </cite>
+
+                        </li>
+
+                        <li>
+                            <b>Symptoms Description</b>:
+                            <br />
+
+                            Symptoms of chikungunya appear between 4 and 8 days (range 2–12 days) after the patient has been bitten by the infected mosquito. Chikungunya is rarely fatal. Most symptoms are generally self-limiting and last for 2–3 days. The disease is characterized by an abrupt onset of fever, which is frequently accompanied by joint pain. Other common signs and symptoms include muscle pain, headache, nausea, fatigue and rash. The joint pain is often debilitating and usually lasts for a few days but may be prolonged, lasting for weeks, months or even years.
+
+                            Most patients recover fully from the infection; however, occasional cases of eye, heart and neurological complications have been reported with CHIKV infections. Patients at extremes of the age spectrum are at higher risk for severe disease including newborns infected during delivery to infected mothers or bitten by infected mosquitoes in the weeks after birth, and older people with underlying medical conditions. Patients with severe disease require hospitalization because of the risk of organ damage and death. Often symptoms in infected individuals are mild and the infection may go unrecognized or be misdiagnosed in areas where dengue and other arboviruses also occur.
+
+                            Once an individual is recovered, available evidence suggests they are likely to be immune from future chikungunya infections.
+                            <br />
+                            <cite style="font-size:12px;">
+                                link:
+                                https://www.who.int/health-topics/chikungunya/#tab=tab_1
+                            </cite>
+                        </li>
+
+                        <li>
+                            <b>Treatment</b>:
+                            <br />
+
+                            Treatment is directed primarily at relieving the symptoms, including joint pain. This is largely achieved by using anti-pyretic drugs to reduce fever, by optimizing the use of pain medication and by administering fluids. Aspirin and other non-steroidal anti-inflammatory drugs should not be administered until dengue can be ruled out to reduce the risk of bleeding. There is no specific antiviral drug treatment for chikungunya.
+
+                            Prevention and control rely heavily on reducing the number of water-filled habitats that allow mosquitoes to breed. During outbreaks, insecticides may be sprayed to kill flying mosquitoes; applied to surfaces in and around water-filled habitats where the mosquitoes land; and used to treat these habitats to kill the immature larvae.
+
+                            There are currently two chikungunya vaccines that have received regulatory approvals and/or have been recommended for use in populations at risk in several countries, but the vaccines are not yet widely available nor in widespread use. WHO and external expert advisors are reviewing vaccine trial and post-marketing data in the context of global chikungunya epidemiology to inform possible recommendations for use.
+
+                            For protection in areas of chikungunya transmission, people with risk of exposure to infected mosquitoes are advised to wear clothing which minimizes skin exposure to day-biting mosquitoes. Window and door screens should be used to prevent mosquitoes from entering homes. Repellents can be applied to exposed skin or to clothing in strict accordance with product label instructions. Repellents should contain DEET, IR3535 or icaridin.
+
+                            Insecticide-treated mosquito nets should be used against day-biting mosquitoes by people who sleep during the daytime, for example young children, sick patients or older people. Mosquito coils or other insecticide vaporizers may also reduce indoor biting.
+
+                            <br />
+                            <cite style="font-size:12px;">
+                                link:
+                                https://www.who.int/health-topics/chikungunya/#tab=tab_1
+                            </cite>
+                        </li>
+
+
+
+
+                    </ul>
+                    <div class="d-grid gap-2 d-md-flex justify-content-md-start">
+                        <!--
+                        <button type="button" class="btn btn-primary btn-lg px-4 me-md-2">Primary</button>
+                        <button type="button" class="btn btn-outline-secondary btn-lg px-4">Default</button>
+                        -->
+                        <a class="btn btn-primary btn-lg px-4 me-md-2" asp-controller="ChikungunyaCase" asp-action="Create">Create Case</a>
+                        <a class="btn btn-outline-secondary btn-lg px-4" asp-controller="ChikungunyaCase" asp-action="ChikungunyaDashboard">Dashboard</a>
+                    </div>
+                </div>
+
+            </div>
+        
+<!--end-->
+
+
+        <div class="b-example-divider"></div>
+
+
+
+
+
+        <!---Mpox Card--------------------------->
+        <hr class="featurette-divider">
+
+        <div class="container col-xxl-8 px-4 py-5">
+            <div class="row flex-lg-row-reverse align-items-center g-5 py-5 rounded-3 border shadow-lg dark">
+                <div class="col-10 col-sm-8 col-lg-6">
+                    <img src="~/images/monkeypox-rash01.png" class="d-block mx-sm-auto img-fluid" alt="Bootstrap Themes" width="800" height="600" loading="lazy">
+                </div>
+                <div class="col-lg-6">
+                    <h1 class="display-5 fw-bold text-body-emphasis lh-1 mb-3">
+                        <i>Mpox Background:</i> <b></b>
+                    </h1>
+                    <p class="lead">
+                        INTRODUCTION
+                        The monkeypox virus
+                        (mpox) is a zoonotic, double
+                        stranded DNA virus of the
+                        Orthopoxvirus genus.
+                    </p>
+                    <ul class="list-group-flush">
+                        <li>
+                            <b>Description</b>:
+                            <br />
+                            Mpox
+                            infection has similar skin man
+                            ifestations to smallpox but is
+                            less severe, self-limited with
+                            lower case-fatality rates.1
+                            Prior to May 2022, mpox was
+                            described as a zoonotic and
+                            traveler-associated infection,
+                            with few cases reported
+                            outside endemic countries.2
+                            Over 79,000 cases of mpox
+                            infections in 103 nonendemic
+                            countries have been reported
+                            since May 2022.3,4 In July 2022, the World Health
+                            Organization declared the ongoing outbreak a
+                            ‘‘Public Health Emergency of International Concern.’’5
+                            Human-to-human transmission occurs via direct
+                            contact with skin lesions, respiratory droplets, and,
+                            less commonly, through fomites.
+                            <br />
+                            <cite style="font-size:12px;">
+                                A dermatologic assessment of 101 mpox
+                                (monkeypox) cases from 13 countries
+                                during the 2022 outbreak: Skin lesion
+                                morphology, clinical course,
+                                and scarring
+                                Sonya Prasad, MSc...
+                            </cite>
+                        </li>
+                    </ul>
+                    <div class="d-grid gap-2 d-md-flex justify-content-md-start">
+                        <!--
+                        <button type="button" class="btn btn-primary btn-lg px-4 me-md-2">Primary</button>
+                        <button type="button" class="btn btn-outline-secondary btn-lg px-4">Default</button>
+                        -->
+                        <a class="btn btn-primary btn-lg px-4 me-md-2" asp-controller="MpoxCase" asp-action="Create">Create Case</a>
+                        <a class="btn btn-outline-secondary btn-lg px-4" asp-controller="MpoxCase" asp-action="MpoxDashboard">Dashboard</a>
+                    </div>
+                </div>
+
+                <!--Mpox Gallery-->
+                <hr class="featurette-divider">
+                <div class="container my-auto">
+                    <div class="row p-12 pb-0 pe-lg-0 pt-lg-5 align-items-center rounded-3 border shadow-lg">
+                        <div class="col-lg-12 p-3 p-lg-5 pt-lg-3">
+
+                            <p class="lead">
+                                <b>Mpox Photos:</b>
+                                <cite style="font-size:12px;"> Courtesy by the Center of Disease Control</cite>
+                            </p>
+
+                            <hr class="featurette-divider">
+
+                            <div class="row featurette col-lg-10 mx-auto">
+                                <div class="col-lg-12 mx-auto">
+
+                                    <div id="carouselExampleCaptions" class="carousel slide col-lg-9 mx-auto">
+                                        <div class="carousel-indicators">
+                                            <button type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
+                                            <button type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide-to="1" aria-label="Slide 2"></button>
+                                            <button type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide-to="2" aria-label="Slide 3"></button>
+                                        </div>
+                                        <div class="carousel-inner">
+                                            <div class="carousel-item active">
+                                                <img src="~/images/monkeypox-rash01.png" class="card-img img-fluid" width="auto" height="auto" style="aspect-ratio: auto;" preserveAspectRatio="xMidYMid slice" loading="lazy" alt="...">
+                                                <div class="carousel-caption d-none d-md-block">
+                                                    <h5></h5>
+                                                    <p></p>
+                                                </div>
+                                            </div>
+                                            <div class="carousel-item">
+                                                <img src="~/images/monkeypox-rash02.png" class="card-img img-fluid" width="auto" height="auto" style="aspect-ratio: auto;" preserveAspectRatio="xMidYMid slice" loading="lazy" alt="...">
+                                                <div class="carousel-caption d-none d-md-block">
+                                                    <h5></h5>
+                                                    <p></p>
+                                                </div>
+                                            </div>
+                                            <div class="carousel-item">
+                                                <img src="~/images/monkeypox-rash04.png" class="card-img img-fluid" width="600" height="900" style="aspect-ratio: auto;" preserveAspectRatio="xMidYMid slice" loading="lazy" alt="...">
+                                                <div class="carousel-caption d-none d-md-block">
+                                                    <h5></h5>
+                                                    <p></p>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide="prev">
+                                            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                                            <span class="visually-hidden">Previous</span>
+                                        </button>
+                                        <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide="next">
+                                            <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                                            <span class="visually-hidden">Next</span>
+                                        </button>
+                                    </div>
+
+                                </div>
+                            </div>
+
+                        </div>
+
+                    </div>
+                </div>
+                <!--Mpox Gallery end-->
+                <!--scrolspy---------------------------->
+                <hr class="featurette-divider">
+                <div class="container my-5">
+                    <div class="row p-4 pb-0 pe-lg-0 pt-lg-5 align-items-center rounded-3 border shadow-lg">
+
+                        <nav id="navbar-example2" class="navbar bg-body-tertiary px-3 mb-3">
+                            <a class="navbar-brand" href="#" style="color:black;">Mpox Patient Form</a>
+                            <ul class="nav nav-pills">
+                                <li class="nav-item">
+                                    <a class="nav-link" href="#scrollspyHeading1">About The Mpox Form</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link" href="#scrollspyHeading2">Symptoms and Transmission</a>
+                                </li>
+                                <li class="nav-item dropdown">
+                                    <a class="nav-link dropdown-toggle" data-bs-toggle="dropdown" href="#" style="background-color: #004d93; color:white;" role="button" aria-expanded="false">Treatment</a>
+                                    <ul class="dropdown-menu">
+                                        <li><a class="dropdown-item" href="#scrollspyHeading3">Treatment</a></li>
+                                        <li><a class="dropdown-item" href="#scrollspyHeading4">New</a></li>
+                                        <li><hr class="dropdown-divider"></li>
+
+                                        <!-- <li><a class="dropdown-item" href="#scrollspyHeading5">Gallery</a></li>-->
+                                    </ul>
+                                </li>
+                            </ul>
+                        </nav>
+                        <div data-bs-spy="scroll" data-bs-target="#navbar-example2" data-bs-root-margin="0px 0px -40%" data-bs-smooth-scroll="true" class="scrollspy-example bg-body-tertiary p-3 rounded-2" tabindex="0">
+                            <h4 id="scrollspyHeading1">About The Mpox Form</h4>
+                            <hr class="featurette-divider">
+
+                            <div class="row featurette">
+                                <div class="col-md-7">
+                                    <h2 class="featurette-heading fw-normal lh-1">
+                                        Mpox Case investigation form:
+                                        <span class="text-body-secondary"></span>
+                                    </h2>
+                                    <p class="lead">
+
+                                        The Case investigation form (CIF) is designed to collect data obtained from persons with suspected,
+                                        probable, or confirmed mpox (also known as monkeypox) infection.
+                                    </p>
+
+                                    <p>
+                                        Data may be collected
+                                        prospectively or retrospectively. This form comprises modules for both cases and for subsequent
+                                        investigation of contacts. The full form is meant to serve as a tool for in-country use; the data are not
+                                        required to be reported to WHO. There is a separate minimum data set Case Reporting Form (CRF)
+                                        containing a subset of the variables in this form, which Member States are requested to complete and
+                                        submit to their respective WHO Regional Offices; it can be found here
+                                        <!--   <a class="btn btn-outline-primary btn-lg px-4" style="color:black; border-color: black; font-style: italic; font-weight:normal; " asp-controller="WelcomeForm" asp-action="Create">Partner With Us</a> -->
+                                        <cite>Mpox CIF adapted from WHO</cite>
+                                    </p>
+
+                                </div>
+
+                                <div class="col-md-5">
+                                    <img class="bd-placeholder-img bd-placeholder-img-lg featurette-image img-thumbnail mx-auto" width="500" height="500" src="~/images/monkeypox-rash01.png" role="img" aria-label="Placeholder: 500x500" preserveAspectRatio="xMidYMid slice" focusable="false" />
+                                </div>
+                            </div>
+
+
+                            <hr class="featurette-divider">
+
+
+                            <!-- <p>...</p>-->
+                            <h4 id="scrollspyHeading2"><span class="btn btn-outline-secondary btn-lg px-4" type="button" style="color:black; border-color: black;" data-bs-toggle="collapse" data-bs-target="#collapseWidthExample" aria-expanded="false" aria-controls="collapseWidthExample">Symptoms and Transmission</span></h4>
+                            <hr class="featurette-divider">
+
+
+
+                            <div class="collapse collapse" id="collapseWidthExample">
+
+
+                                <div class="row featurette">
+                                    <div class="col-md-7">
+                                        <h2 class="featurette-heading fw-normal lh-1">
+                                            Symptoms and Transmission:
+                                            <span class="text-body-secondary"></span>
+                                        </h2>
+
+
+                                        <p class="lead">
+                                            Symptoms and Transmission:
+                                        </p>
+
+                                        <span>
+                                            <cite>LLM generated text(Needs verification from experts) from Model(Google Gemini)</cite>
+                                        </span>
+                                        <br />
+                                        <p class="card-header">Symptoms:</p>
+                                        <p>
+                                            <b>
+                                                Clinical Manifestations and Disease Progression
+                                            </b>
+                                        </p>
+                                        <br />
+
+                                        <div class="card-group">
+
+                                            <b>Incubation Period:</b>
+                                            The incubation period for Mpox, which is the time from exposure to symptom onset, typically
+                                            ranges from 1 to 21 days. More commonly, this period is observed to be between 6 to 13 days ,
+                                            or roughly 1 to 2 weeks. Studies conducted during the 2022 multi-country Clade II outbreak
+                                            indicated an average incubation period of 7-8 days. Shorter incubation periods, ranging from 2
+                                            to 4 days, have also been noted, potentially attributable to direct viral inoculation through sexual
+                                            transmission.
+                                            <br />
+                                        </div>
+
+                                        <br />
+
+                                        <div class="card-group">
+
+                                            <b>Prodromal Symptoms</b>
+                                            The illness often commences with a prodromal, feverish phase, typically lasting 1 to 3 days.
+                                            Common systemic symptoms during this phase include fever, intense headache, swollen lymph
+                                            nodes (lymphadenopathy), back pain, muscle aches (myalgias), and severe fatigue (malaise,
+                                            exhaustion, asthenia). Lymphadenopathy is a characteristic feature of Mpox, with swelling often
+                                            occurring in the neck (submandibular & cervical), armpits (axillary), or groin (inguinal), and can
+                                            be unilateral or bilateral. Respiratory symptoms, such as sore throat, runny or stuffy nose, or
+                                            cough, may also manifest.
+                                            <br />
+                                        </div>
+
+                                        <div class="card-group">
+
+                                            A significant observation from the 2022 outbreak is that systemic prodromal symptoms
+                                            sometimes began after the rash appeared in up to half of the cases, or were entirely absent in
+                                            others. This deviation from the traditional presentation, where prodromal symptoms typically
+                                            precede the rash, complicates diagnosis and requires clinicians to maintain a high index of
+                                            suspicion. Patients may present with seemingly mild or atypical symptoms, such as isolated
+                                            genital lesions, without any prior systemic illness, making Mpox harder to distinguish from other
+                                            sexually transmitted infections or common skin conditions. This underscores the necessity for
+                                            increased clinician awareness and education regarding varied presentations , and a lower
+                                            threshold for diagnostic testing, particularly in at-risk populations. It also highlights the
+                                            importance of thorough physical examination beyond just visible rashes, as internal mucosal
+                                            lesions can occur.
+                                        </div>
+                                        <br />
+
+
+                                        <div class="card-group">
+                                            <p>
+                                                <b>Characteristic Rash and Progression</b>
+                                                The most common and distinctive symptom of Mpox is a rash or sores that can initially resemble
+                                                pimples or blisters. This rash typically emerges 1 to 4 days after the onset of flu-like symptoms;
+                                                however, for some individuals, the rash may be the very first symptom observed.
+
+                                            </p>
+                                        </div>
+
+                                        <br />
+                                        <div class="card-group">
+                                            <b>
+                                                The lesions progress through distinct stages over a period of 2 to 4 weeks :
+                                            </b>
+
+                                            <ul class="list-group">
+                                                <li>Macules: These are flat spots, typically appearing for 1-2 days.</li>
+                                                <li>
+                                                    Papules: Macules evolve into raised, firm, and often painful lesions, usually lasting 1-2
+                                                    days.
+                                                </li>
+                                                <li>
+                                                    Vesicles: These lesions then become raised and filled with clear fluid, typically for 1-2
+                                                    days.
+                                                </li>
+                                                <li>
+                                                    Pustules: Vesicles transform into pustules, which are filled with opaque fluid, sharply
+                                                    raised, firm, and frequently exhibit umbilication (a central depression). This stage typically
+                                                    lasts 5-7 days before crusting begins.
+                                                </li>
+
+                                                <li>
+                                                    Scabs/Crusts: By the end of the second week, pustules have crusted and scabbed over.
+                                                    These scabs will remain for approximately 7-14 days before eventually falling off.
+                                                    The rash often concentrates on the face, palms of the hands, and soles of the feet. However,
+                                                    lesions can also appear on or inside the mouth, genitals, anus, or be diffusely distributed across
+                                                    the body. Lesions are frequently described as painful until they enter the healing phase, at which
+                                                    point they become itchy. Sores located in the anus or urethra can cause significant discomfort
+                                                    and make urination or defecation difficult. During the 2022 outbreak, it was observed that
+                                                    lesions were sometimes localized with an atypical distribution, and could present at different
+                                                    stages simultaneously on the same patient, although lesions within a specific area typically
+                                                    evolved together.
+                                                </li>
+                                            </ul>
+                                        </div>
+
+                                        <br />
+                                        <br />
+                                        <p class="card-header">Transmission:</p>
+                                        <p>
+                                            <b>Primary Human-to-Human Transmission Pathways:</b>
+                                            <br />
+                                            <span>
+                                                <cite>LLM generated text(Needs verification from experts) from Model(Google Gemini)</cite>
+                                            </span>
+                                            <br />
+                                            The primary mode of Mpox spread is through close physical contact with an individual who has
+                                            the infection. This encompasses direct contact with the characteristic rash, skin lesions, scabs,
+                                            or bodily fluids such as fluid, pus, or blood from the lesions.
+                                            A significant observation from the 2022 global outbreak, particularly in the United States,
+                                            revealed that Mpox spread almost exclusively through oral, anal, and vaginal sex, and other
+                                            intimate physical contact. This includes activities such as rimming, hugging, kissing, biting,
+                                            cuddling, and massaging. This transmission pattern was predominantly observed within social
+                                            networks of gay men, other men who have sex with men (MSM), and transgender individuals.
+                                            Studies from Spain and Germany during the 2022 outbreak further corroborated the high
+                                            prevalence of cases within the MSM population, with inguinal lymphadenopathy suggesting
+                                            sexual transmission as a primary route. This strong epidemiological link to sexual and intimate
+                                            contact represents a substantial shift in the primary mode of human-to-human transmission
+                                            compared to historical patterns, where such specific sexual transmission was not as prominently
+                                            documented. This change in transmission dynamics underscores the necessity for public health
+                                            messaging and prevention strategies to specifically target these high-risk behaviors and
+                                            communities, moving beyond general contact precautions to include safe sex practices and
+                                            targeted vaccination campaigns.
+                                            Transmission can also occur through exposure to bodily fluids, lesions on the skin or internal
+                                            mucosal surfaces (such as in the mouth or throat), and respiratory particles. While some studies
+                                            suggest the virus can be found in respiratory droplets, information from real-life outbreaks
+                                            indicates that the likelihood of human-to-human respiratory transmission across rooms, such as
+                                            in markets or classrooms, appears low. However, prolonged close face-to-face contact can
+                                            facilitate transmission. This nuanced understanding means that while widespread airborne
+                                            precautions may not be necessary for the general public, healthcare workers and caregivers in
+                                            close proximity to infected individuals require appropriate personal protective equipment,
+                                            including masks and gloves. It also suggests that isolation measures should consider the
+                                            immediate personal space of an infected individual rather than solely focusing on large room
+                                            ventilation.
+                                            Indirect Contact via Contaminated Fomites
+                                            The virus can spread indirectly through contact with objects, fabrics, and surfaces that have
+                                            been contaminated by an infected person and have not been disinfected. This includes items
+                                            such as clothing, bedding, towels, dishes, eating utensils, fetish gear, or sex toys. While
+                                            possible, this mode of transmission is generally considered less common than direct physical
+                                            contact.
+                                            Vertical Transmission
+                                            Mpox can be transmitted from a pregnant individual to the fetus via the placenta. Additionally, an
+                                            infected parent can transmit the virus to a child during or after birth through skin-to-skin contact.
+                                            Contagious Period
+                                            An individual with Mpox can spread the virus to others from the time symptoms first appear until
+                                            the rash has completely healed and a fresh, intact layer of skin has formed underneath. In some
+                                            instances, individuals may be able to spread Mpox one to four days before the onset of
+                                            symptoms, although the prevalence of this pre-symptomatic transmission is not yet fully
+                                            understood.
+                                            Uncertainties and Ongoing Research
+                                            Current understanding of Mpox transmission still has areas of uncertainty. It is not definitively
+                                            clear how often individuals who do not exhibit symptoms can spread the virus. Furthermore,
+                                            ongoing research is focused on elucidating how Mpox virus can be spread through respiratory
+                                            secretions and whether it can be transmitted through semen, vaginal fluids, urine, or feces.
+
+                                        </p>
+
+                                    </div>
+                                    <div class="col-md-5">
+                                        <img class="bd-placeholder-img bd-placeholder-img-lg featurette-image img-thumbnail mx-auto" width="700" height="500" src="~/images/monkeypox-rash01.png" role="img" aria-label="Placeholder: 500x500" preserveAspectRatio="xMidYMid slice" focusable="false" />
+                                    </div>
+                                </div>
+
+
+                            </div>
+
+
+
+                            <h4 id="scrollspyHeading3"><span class="btn btn-outline-secondary btn-lg px-4" style="color:black; border-color: black;" type="button" data-bs-toggle="collapse" data-bs-target="#collapseWidthExampleAboutUs" aria-expanded="false" aria-controls="collapseWidthExampleAboutUs">Treatment</span></h4>
+
+                            <hr class="featurette-divider">
+
+                            <div class="collapse collapse" id="collapseWidthExampleAboutUs">
+
+
+                                <div class="row featurette">
+                                    <div class="col-md-7">
+                                        <h2 class="featurette-heading fw-normal lh-1">
+                                            Treatment
+                                            <span class="text-body-secondary"></span>
+                                        </h2>
+                                        <p class="lead">
+                                            Treatment and Management Strategies
+                                            <br />
+                                            <span>
+                                                <small>
+                                                    <cite>LLM generated text(Needs verification from experts) from Model(Google Gemini)</cite>
+                                                </small>
+                                            </span>
+                                        </p>
+
+                                        <p class="card-header">Treatment:</p>
+
+                                        <p>
+                                            Treatment and Management Strategies
+                                            Supportive Care
+                                            For the majority of patients who do not present with severe disease or identified risk factors for
+                                            severe outcomes, the cornerstone of Mpox management involves supportive care aimed at
+                                            alleviating symptoms and preventing complications. Clinical care protocols are designed to
+                                            optimize patient comfort, manage potential complications, and mitigate long-term sequelae.
+                                        </p>
+                                        <div class="card-group">
+                                            <b>
+                                                Key
+                                                components of supportive care include:
+                                            </b>
+                                            <ul>
+                                                <li>Effective pain management through the administration of analgesics.</li>
+                                                <li>
+                                                    Diligent care for the rash, which may involve allowing lesions to air dry when feasible or
+                                                    covering them with a moist dressing for protection as needed.
+                                                </li>
+                                                <li>
+                                                    Strict avoidance of touching sores located in the mouth or eyes, with the judicious use of
+                                                    mouth rinses and eye drops, while specifically avoiding cortisone-containing products.
+                                                </li>
+                                                <li>
+                                                    Ensuring adequate hydration and nutrition to support overall recovery.
+                                                </li>
+                                                <li>
+                                                    Proactive management and treatment of any secondary bacterial infections that may
+                                                    arise.
+                                                </li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-5">
+                                        <img class="bd-placeholder-img bd-placeholder-img-lg featurette-image img-fluid mx-auto" width="500" height="500" src="~/images/monkeypox-rash01.png" role="img" aria-label="Placeholder: 500x500" preserveAspectRatio="xMidYMid slice" focusable="false" />
+                                    </div>
+                                </div>
+
+
+                            </div>
+
+
+
+
+
+                        </div>
+
+
+                        </<div>
+                        </div>
+                        <!--end scrolspy-------------------------->
+
+
+
+
+
+
+
+
+
+
+
+                    </div>
+
+
+
+                </div>
+                <!--scrolspy end-->
+
+            </div>
+
+        </div>
+        <!---Mpox Card end--------------------------->
+
+
+
+
+
+
+
+
+
+    <!--------Mpox Card End------------->
+    <!--------------------------------->
+    <!--Prevention Lab testing Diagnosis-->
+    <!--    <hr class="featurette-divider">-->
+    <!--
+    <hr class="featurette-divider">
+    <div class="row p-4 pb-0 pe-lg-0 pt-lg-5 align-items-center rounded-3 border shadow-lg">
+
+        <div class="card">
+            <p class="card-header">Prevention:</p>
+            <div class="card-body">
+                <br />
+                <span>
+                    <cite>LLM generated text(Needs verification from experts) from Model(Google Gemini)</cite>
+                </span>
+                <br />
+
+                Avoiding close contact with
+                infected individuals or
+                contaminated materials.
+                Covering rashes/sores if sick
+                and having intimate contact.
+                Careful use of condoms/gloves
+                (partial protection). Not sharing
+                personal items (towels,
+                bedding, sex toys). Avoiding
+                contact with sick/dead animals
+                and properly cooking meat in
+                endemic areas.
+            </div>
+        </div>
+
+        <div class="card">
+            <p class="card-header">Clinical Diagnosis:</p>
+            <div class="card-body"></div>
+        </div>
+
+        <div class="card">
+            <p class="card-header">Lab Testing:</p>
+            <div class="card-body"></div>
+        </div>
+    </div>-->
+    <!--end PLD------------------------------->
+
+
+
+
+
+
+    <!----------------------------Diphera start-------------------------------------->
+    <hr class="featurette-divider">
+    <div class="col-lg-12 container my-5">
+        <div class="row p-4 pb-0 pe-lg-0 pt-lg-5 align-items-center rounded-3 border shadow-lg">
+
+
+
+            <nav id="navbar-example2" class="navbar bg-body-tertiary px-3 mb-3">
+                <a class="navbar-brand" href="#" style="color:black;">Diphtheria Patient Form</a>
+
+                <!--
+                <ul class="nav nav-pills">
+                    <li class="nav-item" style="color:black;">
+                        <a class="nav-link" href="#scrollspyHeading1">About The Diphtheria Form</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#scrollspyHeading2">Diphtheria Symptoms and Transmission</a>
+                    </li>
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" data-bs-toggle="dropdown" href="#" style="background-color: #004d93; color:white;" role="button" aria-expanded="false">Diphtheria</a>
+                        <ul class="dropdown-menu">
+                            <li><a class="dropdown-item" href="#scrollspyHeading3">Treatment</a></li>
+                            <li><a class="dropdown-item" href="#scrollspyHeading4">New</a></li>
+                            <li><hr class="dropdown-divider"></li>
+
+                            <li><a class="dropdown-item" href="#scrollspyHeading5">Diphtheria Gallery</a></li>
+                        </ul>
+                    </li>
+                </ul>
+                -->
+
+                <div class="btn btn-outline-primary" style="padding:8px; margin-bottom:2px;">Diphtheria Case Form</div>
+
+            </nav>
+
+
+
+            <div data-bs-spy="scroll" data-bs-target="#navbar-example2" data-bs-root-margin="0px 0px -40%" data-bs-smooth-scroll="true" class="scrollspy-example bg-body-tertiary p-3 rounded-2" tabindex="0">
+                <h4 id="scrollspyHeading1">Overview</h4>
+
+                <div class="row featurette">
+                    <div class="col-md-7">
+                        <h2 class="featurette-heading fw-normal lh-1">
+                            Diphtheria
+                            <span class="text-body-secondary"></span>
+                        </h2>
+                        <p class="lead">
+                            Overview
+                        </p>
+
+                        <p class="text-sm-start">
+                            Diphtheria (dif-THEER-e-uh) is a serious bacterial infection that usually affects the mucous membranes of the nose and throat.
+                            Diphtheria is extremely rare in the United States and other developed countries thanks to widespread vaccination against the disease.
+
+                            However, many countries with limited health care or vaccination options still experience high rates of diphtheria.
+
+                            Diphtheria can be treated with medications. But in advanced stages, diphtheria can damage the heart, kidneys and nervous system. Even with treatment, diphtheria can be deadly, especially in children.
+
+                            <cite>Mayo Clinic</cite>
+                        </p>
+
+                    </div>
+
+                    <div class="col-md-5">
+                        <img class="bd-placeholder-img bd-placeholder-img-lg featurette-image img-fluid mx-auto" src="~/images/pics_diphtheria/diphtheria-8.jpg" role="img" aria-label="Placeholder: 500x500" preserveAspectRatio="xMidYMid slice" focusable="false" />
+                    </div>
+                </div>
+
+
+                <div class="d-grid gap-2 d-md-flex justify-content-md-start">
+                    <!--
+                    <button type="button" class="btn btn-primary btn-lg px-4 me-md-2">Primary</button>
+                    <button type="button" class="btn btn-outline-secondary btn-lg px-4">Default</button>
+                    -->
+                    <a class="btn btn-primary btn-lg px-4 me-md-2" asp-controller="DiphtheriaCase" asp-action="Create">Create Case</a>
+                    <a class="btn btn-outline-secondary btn-lg px-4" asp-controller="DiphtheriaCase" asp-action="DiphtheriaDashboard">Dashboard</a>
+                </div>
+
+
+                <br />
+
+
+
+                <!--Gallery -->
+                <hr class="featurette-divider">
+                <div class="container my-auto">
+                    <div class="row p-12 pb-0 pe-lg-0 pt-lg-5 align-items-center rounded-3 border shadow-lg">
+                        <div class="col-lg-12 p-3 p-lg-5 pt-lg-3">
+
+
+                            <h5 class="featurette-heading fw-normal lh-1" style="text-align:center;">
+                                Diphtheria Images
+                                <span class="text-body-secondary" style="font:small;">Cite Images</span>
+                            </h5>
+                            <div class="col-lg-12 mx-auto">
+                                <div id="carouselExampleCaptions2" class="carousel slide col-lg-9 mx-auto" style="padding: 8px; margin-bottom: 1px;">
+                                    <div class="carousel-indicators">
+                                        <button type="button" data-bs-target="#carouselExampleCaptions2" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
+                                        <button type="button" data-bs-target="#carouselExampleCaptions2" data-bs-slide-to="1" aria-label="Slide 2"></button>
+                                        <button type="button" data-bs-target="#carouselExampleCaptions2" data-bs-slide-to="2" aria-label="Slide 3"></button>
+
+                                        <button type="button" data-bs-target="#carouselExampleCaptions2" data-bs-slide-to="3" aria-label="Slide 4"></button>
+                                        <button type="button" data-bs-target="#carouselExampleCaptions2" data-bs-slide-to="4" aria-label="Slide 5"></button>
+                                        <button type="button" data-bs-target="#carouselExampleCaptions2" data-bs-slide-to="5" aria-label="Slide 6"></button>
+                                        <button type="button" data-bs-target="#carouselExampleCaptions2" data-bs-slide-to="6" aria-label="Slide 7"></button>
+
+                                    </div>
+                                    <div class="carousel-inner">
+                                        <div class="carousel-item active">
+                                            <img src="~/images/pics_diphtheria/diphtheria-4.jpg" class="card-img img-fluid" width="600" height="900" style="aspect-ratio: auto;" preserveAspectRatio="xMidYMid slice" loading="lazy" alt="...">
+                                            <div class="carousel-caption d-none d-md-block">
+                                                <h5></h5>
+                                                <p></p>
+                                            </div>
+                                        </div>
+                                        <div class="carousel-item">
+                                            <img src="~/images/pics_diphtheria/diphtheria-2.jpg" class="card-img img-fluid" width="600" height="900" style="aspect-ratio: auto;" preserveAspectRatio="xMidYMid slice" loading="lazy" alt="...">
+                                            <div class="carousel-caption d-none d-md-block">
+                                                <h5></h5>
+                                                <p></p>
+                                            </div>
+                                        </div>
+                                        <div class="carousel-item">
+                                            <img src="~/images/pics_diphtheria/diphtheria-3.jpg" class="card-img img-fluid" width="600" height="900" style="aspect-ratio: auto;" preserveAspectRatio="xMidYMid slice" loading="lazy" alt="...">
+                                            <div class="carousel-caption d-none d-md-block">
+                                                <h5></h5>
+                                                <p></p>
+                                            </div>
+                                        </div>
+
+
+
+
+                                        <div class="carousel-item">
+                                            <img src="~/images/pics_diphtheria/diphtheria-5.jpg" class="card-img img-fluid" width="600" height="900" style="aspect-ratio: auto;" preserveAspectRatio="xMidYMid slice" loading="lazy" alt="...">
+                                            <div class="carousel-caption d-none d-md-block">
+                                                <h5></h5>
+                                                <p></p>
+                                            </div>
+                                        </div>
+                                        <div class="carousel-item">
+                                            <img src="~/images/pics_diphtheria/diphtheria-6.jpg" class="card-img img-fluid" width="600" height="900" style="aspect-ratio: auto;" preserveAspectRatio="xMidYMid slice" loading="lazy" alt="...">
+                                            <div class="carousel-caption d-none d-md-block">
+                                                <h5></h5>
+                                                <p></p>
+                                            </div>
+                                        </div>
+                                        <div class="carousel-item">
+                                            <img src="~/images/pics_diphtheria/diphtheria-7.jpg" class="card-img img-fluid" width="600" height="900" style="aspect-ratio: auto;" preserveAspectRatio="xMidYMid slice" loading="lazy" alt="...">
+                                            <div class="carousel-caption d-none d-md-block">
+                                                <h5></h5>
+                                                <p></p>
+                                            </div>
+                                        </div>
+                                        <div class="carousel-item">
+                                            <img src="~/images/pics_diphtheria/diphtheria-8.jpg" class="card-img img-fluid" width="600" height="900" style="aspect-ratio: auto;" preserveAspectRatio="xMidYMid slice" loading="lazy" alt="...">
+                                            <div class="carousel-caption d-none d-md-block">
+                                                <h5></h5>
+                                                <p></p>
+                                            </div>
+                                        </div>
+
+
+                                    </div>
+                                    <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleCaptions2" data-bs-slide="prev">
+                                        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                                        <span class="visually-hidden">Previous</span>
+                                    </button>
+                                    <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleCaptions2" data-bs-slide="next">
+                                        <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                                        <span class="visually-hidden">Next</span>
+                                    </button>
+                                </div>
+
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+                <!----------Gallery end----------->
+
+                <br />
+
+
+
+
+
+                <h4 id="scrollspyHeading2"><span class="btn btn-outline-secondary btn-lg px-4" type="button" style="color:black; border-color: black;" data-bs-toggle="collapse" data-bs-target="#collapseWidthExample" aria-expanded="false" aria-controls="collapseWidthExample">Symptoms and Transmission</span></h4>
+
+
+                <br />
+                <div class="collapse collapse" id="collapseWidthExample">
+
+
+                    <div class="row featurette">
+                        <div class="col-md-7">
+                            <h2 class="featurette-heading fw-normal lh-1">
+                                Diphtheria Symptoms and Transmission:
+                                <span class="text-body-secondary"></span>
+                            </h2>
+
+
+                            <p class="lead">
+                                Symptoms and Transmission:
+                            </p>
+
+                            <span>
+                                <cite>Mayo Clinic</cite>
+                            </span>
+                            <br />
+                            <p class="card-header">Diphtheria Symptoms:</p>
+                            <p>
+                                Symptoms
+                                Diphtheria signs and symptoms usually begin 2 to 5 days after a person becomes infected. Signs and symptoms may include:
+
+                                A thick, gray membrane covering the throat and tonsils
+                                A sore throat and hoarseness
+                                Swollen glands (enlarged lymph nodes) in the neck
+                                Difficulty breathing or rapid breathing
+                                Nasal discharge
+                                Fever and chills
+                                Tiredness
+                                In some people, infection with diphtheria-causing bacteria causes only a mild illness — or no obvious signs and symptoms at all. Infected people who stay unaware of their illness are known as carriers of diphtheria. They're called carriers because they can spread the infection without being sick themselves.
+
+
+
+                            </p>
+
+                            <p>
+                                <b>Skin (cutaneous) diphtheria:</b>
+                                A second type of diphtheria can affect the skin, causing pain, redness and swelling similar to other bacterial skin infections. Ulcers covered by a gray membrane also may be a sign of skin diphtheria.
+                            </p>
+
+                            <p>
+                                Although it's more common in tropical climates, diphtheria on the skin also occurs in the United States. It may happen especially among people with poor hygiene who live in crowded conditions.
+                            </p>
+                            <br />
+
+                            <div class="card-group">
+                                <b>Incubation Period:</b>
+                                Diphtheria signs and symptoms usually begin 2 to 5 days after a person becomes infected.
+                                When to see a doctor
+                                Call your family doctor immediately if you or your child has been exposed to someone with diphtheria. If you're not sure whether your child has been vaccinated against diphtheria, schedule an appointment. Make sure your own vaccinations are current
+                                <br />
+                            </div>
+
+                            <br />
+
+                            <div class="card-group" style="text-align: left;padding: 8px;">
+
+                                <ul class="list-group">
+                                    <li style="list-style:none;"><b>Symptoms:</b></li>
+                                    <li>A thick, gray membrane covering the throat and tonsils</li>
+                                    <li>A sore throat and hoarseness</li>
+                                    <li>Swollen glands (enlarged lymph nodes) in the neck</li>
+                                    <li>Difficulty breathing or rapid breathing</li>
+                                    <li>Nasal discharge</li>
+                                    <li>Fever and chills</li>
+                                    <li>Tiredness</li>
+                                    <li>
+                                        <i>
+                                            Skin (cutaneous) diphtheria
+                                            A second type of diphtheria can affect the skin, causing pain, redness and swelling similar to other bacterial skin infections. Ulcers covered by a gray membrane also may be a sign of skin diphtheria.
+                                        </i>
+                                    </li>
+                                </ul>
+
+                            </div>
+
+                            <br />
+                            <br />
+                            <p class="card-header">Transmission:</p>
+                            <p>
+                                <b>Diphtheria Primary Human-to-Human Transmission Pathways:</b>
+                                <br />
+                                <span>
+                                    <cite>cite Mayo Clinic</cite>
+                                </span>
+                                <br />
+                                <b>Causes: </b>
+                                Diphtheria is caused by the bacterium Corynebacterium diphtheriae. The bacterium usually multiplies on or near the surface of the throat or skin. C. diphtheriae spreads through:
+
+                                Airborne droplets. When an infected person's sneeze or cough releases a mist of contaminated droplets, people nearby may inhale C. diphtheriae. Diphtheria spreads easily this way, especially in crowded conditions.
+                                Contaminated personal or household items. People sometimes catch diphtheria from handling an infected person's things, such as used tissues or hand towels, that may be contaminated with the bacteria.
+
+                                Touching an infected wound also can transfer diphtheria-causing bacteria.
+
+                                People who have been infected by the diphtheria bacteria and who haven't been treated can infect people who haven't had the diphtheria vaccine — even if they don't show any symptoms.
+
+                            </p>
+
+                            <p>
+                                <b>Risk factors: </b>
+                                People who are at increased risk of catching diphtheria include:
+
+                                Children and adults who don't have up-to-date vaccinations
+                                People living in crowded or unsanitary conditions
+                                Anyone who travels to an area where diphtheria infections are more common
+                                Diphtheria rarely occurs in the United States and Western Europe, where children have been vaccinated against the condition for decades. However, diphtheria is still common in developing countries where vaccination rates are low.
+
+                                In areas where diphtheria vaccination is standard, the disease is mainly a threat to unvaccinated or inadequately vaccinated people who travel internationally or have contact with people from less developed countries.
+                            </p>
+
+                            <p>
+                                <b>Complications: </b>
+                                Left untreated, diphtheria can lead to:
+
+                                Breathing problems. Diphtheria-causing bacteria may produce a toxin. This toxin damages tissue in the immediate area of infection — usually, the nose and throat. At that site, the infection produces a tough, gray membrane made up of dead cells, bacteria and other substances. This membrane can obstruct breathing.
+                                Heart damage. The diphtheria toxin may spread through the bloodstream and damage other tissues in the body. For example, it can damage the heart muscle, causing such complications as inflammation of the heart muscle (myocarditis). Heart damage from myocarditis may be slight or severe. At its worst, myocarditis can lead to heart failure and sudden death.
+                                Nerve damage. The toxin can also cause nerve damage. Typical targets are nerves to the throat, where poor nerve conduction may cause difficulty swallowing. Nerves to the arms and legs also may become inflamed, causing muscle weakness.
+
+                                If the diphtheria toxin damages the nerves that help control muscles used in breathing, these muscles may become paralyzed. At that point, you might need mechanical assistance to breathe.
+
+                                With treatment, most people with diphtheria survive these complications, but recovery is often slow. Diphtheria is fatal about 5% to 10% of the time. Rates of death are higher in children under age 5 or adults older than age 40.
+                            </p>
+                        </div>
+                        <div class="col-md-5">
+                            <img class="bd-placeholder-img bd-placeholder-img-lg featurette-image img-fluid mx-auto" src="~/images/pics_diphtheria/diphtheria-2.jpg" role="img" aria-label="Placeholder: 500x500" preserveAspectRatio="xMidYMid slice" focusable="false" />
+                        </div>
+                    </div>
+
+
+                </div>
+
+
+
+
+
+
+                <h4 id="scrollspyHeading3"><span class="btn btn-outline-secondary btn-lg px-4" style="color:black; border-color: black;" type="button" data-bs-toggle="collapse" data-bs-target="#collapseWidthExampleAboutUs" aria-expanded="false" aria-controls="collapseWidthExampleAboutUs">Treatment</span></h4>
+
+
+                <div class="collapse collapse" id="collapseWidthExampleAboutUs">
+
+
+                    <div class="row featurette">
+                        <div class="col-md-7">
+                            <h2 class="featurette-heading fw-normal lh-1">
+                                Diphtheria Treatment
+                                <span class="text-body-secondary"></span>
+                            </h2>
+                            <p class="lead">
+                                Treatment and Management Strategies
+                                <br />
+                                <span>
+                                    <small>
+                                        <cite>cite Mayo Clinic & WHO</cite>
+                                    </small>
+                                </span>
+                            </p>
+
+                            <p class="card-header">Treatment:</p>
+                            <div class="card-group">
+                                <p>
+                                    The risk of complications or death decrease considerably if appropriate treatment is provided early in the course of illness. For this reason, if diphtheria is suspected, testing to confirm the disease should be done promptly and treatment should be started as soon as possible.
+
+                                    Cases of diphtheria are usually treated with diphtheria antitoxin as well as antibiotics. Diphtheria specific antitoxin neutralizes circulation toxin in the blood. Detailed instructions for giving antitoxin can be found in the WHO treatment guidelines. Antibiotics stop bacterial replication and thereby toxin production, speed up getting rid of the bacteria and prevents transmission to others. However, many current strains of diphtheria have exhibited resistance to some commonly used antimicrobial drugs. Anyone that has had diphtheria should also receive vaccine after the acute phase of the illness is over.
+
+                                    Individuals who have been in contact with cases of diphtheria should be treated with antibiotics prophylactically to prevent illness. Their immunization status of all contacts should also be checked. If they are not fully vaccinated, they should also be offered vaccine.
+                                    <cite>cite WHO</cite>
+
+                                </p>
+
+                            </div>
+
+                            <div class="card-group">
+
+                                <p>
+                                    <b>Prevention: </b>
+                                    Before antibiotics were available, diphtheria was a common illness in young children. Today, the disease is not only treatable but also preventable with a vaccine.
+
+                                    The diphtheria vaccine is usually combined with vaccines for tetanus and whooping cough (pertussis). The three-in-one vaccine is known as the diphtheria, tetanus and pertussis vaccine. The latest version of this vaccine is known as the DTaP vaccine for children and the Tdap vaccine for adolescents and adults.
+
+                                    The diphtheria, tetanus and pertussis vaccine is one of the childhood vaccinations that doctors in the United States recommend during infancy. Vaccination consists of a series of five shots, typically administered in the arm or thigh, given to children at these ages:
+
+                                    2 months
+                                    4 months
+                                    6 months
+                                    15 to 18 months
+                                    4 to 6 years
+                                    The diphtheria vaccine is effective at preventing diphtheria. But there may be some side effects. Some children may experience a mild fever, fussiness, drowsiness or tenderness at the injection site after a DTaP shot. Ask your doctor what you can do for your child to minimize or relieve these effects.
+
+                                    Complications are very rare. In rare cases, the DTaP vaccine causes serious but treatable complications in a child, such as an allergic reaction (hives or a rash develops within minutes of the injection).
+
+                                    Some children — such as those with epilepsy or another nervous system condition — may not be able to get the DTaP vaccine.
+
+                                    Booster shots
+                                    After the initial series of vaccinations in childhood, you need booster shots of the diphtheria vaccine to help you maintain your immunity. That's because immunity to diphtheria fades with time.
+
+                                    Children who received all of the recommended vaccinations before age 7 should receive their first booster shot at around age 11 or 12. The next booster shot is recommended 10 years later, then repeated at 10-year intervals. Booster shots are particularly important if you travel to an area where diphtheria is common.
+
+                                    The booster is given as a Tdap vaccine or as a diphtheria booster combined with the tetanus booster — the tetanus-diphtheria (Td) vaccine. This combination vaccine is given by injection, usually into the arm or thigh.
+
+                                    The vaccine for Tdap is an alternative vaccine for adolescents ages 11 through 18 and adults who haven't previously had a booster. It's also recommended once during pregnancy, regardless of previous vaccinations.
+
+                                    Talk to your doctor about vaccines and booster shots if you're unsure of your vaccination status. A Tdap vaccine may also be recommended as part of the Td series for children ages 7 through 10 who aren't up to date with the vaccine schedule.
+                                    <cite>cite Mayo Clinic</cite>
+
+                                </p>
+
+                            </div>
+
+                        </div>
+                        <div class="col-md-5">
+                            <img class="bd-placeholder-img bd-placeholder-img-lg featurette-image img-fluid mx-auto" width="500" height="500" src="~/images/pics_diphtheria/diphtheria-3.jpg" role="img" aria-label="Placeholder: 500x500" preserveAspectRatio="xMidYMid slice" focusable="false" />
+                        </div>
+                    </div>
+
+
+                </div>
+
+
+            </div>
+
+            </<div>
+            </div>
+
+        </div>
+    </div>
+    <!----------------------------Diphera end-------------------------------------->
+
+
+
+
+
+
+    <!----------------------------Measles start-------------------------------------->
+    <hr class="featurette-divider">
+    <div class="col-lg-12 container my-5">
+        <div class="row p-4 pb-0 pe-lg-0 pt-lg-5 align-items-center rounded-3 border shadow-lg">
+
+            <nav id="navbar-example3" class="navbar bg-body-tertiary px-3 mb-3">
+                <a class="navbar-brand" href="#" style="color:black;">Measles Patient Form</a>
+
+                <div class="btn btn-outline-primary" style="padding:8px; margin-bottom:2px;">Measles Case Form</div>
+
+            </nav>
+
+
+
+            <div data-bs-spy="scroll" data-bs-target="#navbar-example3" data-bs-root-margin="0px 0px -40%" data-bs-smooth-scroll="true" class="scrollspy-example bg-body-tertiary p-3 rounded-2" tabindex="0">
+                <h4 id="scrollspyHeading1">Overview</h4>
+
+                <div class="row featurette">
+                    <div class="col-md-7">
+                        <h2 class="featurette-heading fw-normal lh-1">
+                            Measles
+                            <span class="text-body-secondary"></span>
+                        </h2>
+                        <p class="lead">
+                            Overview
+                        </p>
+
+                        <p class="text-sm-start">
+                            <cite>
+                                cite: WHO Measles, References:
+                                1. Minta AA, Ferrari M, Antoni S, et al. Progress Toward Measles Elimination — Worldwide, 2000–2023. MMWR Morb Mortal Wkly Rep 2024;73:1036–1042. DOI: http://dx.doi.org/10.15585/mmwr.mm7345a4
+                            </cite>
+                        </p>
+
+                        <p>
+                            Measles is a highly contagious disease caused by a virus. It spreads easily when an infected person breathes, coughs or sneezes. It can cause severe disease, complications, and even death.
+                            Measles can affect anyone but is most common in children.
+                            Measles infects the respiratory tract and then spreads throughout the body. Symptoms include a high fever, cough, runny nose and a rash all over the body.
+                            Being vaccinated is the best way to prevent getting sick with measles or spreading it to other people. The vaccine is safe and helps your body fight off the virus.
+                            Before the introduction of measles vaccine in 1963 and widespread vaccination, major epidemics occurred approximately every two to three years and caused an estimated 2.6 million deaths each year.
+                            An estimated 107 500 people died from measles in 2023 – mostly children under the age of five years, despite the availability of a safe and cost-effective vaccine.
+                            Accelerated immunization activities by countries, WHO, the Measles & Rubella Partnership (formerly the Measles & Rubella Initiative), and other international partners successfully prevented an estimated 60 million deaths between 2000–2023. Vaccination decreased an estimated measles deaths from 800 062 in 2000 to 107
+                        </p>
+
+                    </div>
+
+                    <div class="col-md-5">
+                        <img class="bd-placeholder-img bd-placeholder-img-md featurette-image img-fluid mx-auto" src="~/images/measles_pics/measles-4.jpg" role="img" aria-label="Placeholder: 500x500" preserveAspectRatio="xMidYMid slice" focusable="false" />
+                    </div>
+                </div>
+
+
+                <div class="d-grid gap-2 d-md-flex justify-content-md-start">
+                    <!--
+                    <button type="button" class="btn btn-primary btn-lg px-4 me-md-2">Primary</button>
+                    <button type="button" class="btn btn-outline-secondary btn-lg px-4">Default</button>
+                    -->
+                    <a class="btn btn-primary btn-lg px-4 me-md-2" asp-controller="MeaslesCase" asp-action="Create">Create Case</a>
+                    <a class="btn btn-outline-secondary btn-lg px-4" asp-controller="MeaslesCase" asp-action="MeaslesDashboard">Dashboard</a>
+                </div>
+
+
+                <br />
+
+
+
+                    <!--Gallery -->
+                    <hr class="featurette-divider">
+
+                    <div class="container my-auto">
+                        <div class="row p-12 pb-0 pe-lg-0 pt-lg-5 align-items-center rounded-3 border shadow-lg">
+                            <div class="col-lg-12 p-3 p-lg-5 pt-lg-3">
+
+
+                                <h5 class="featurette-heading fw-normal lh-1" style="text-align:center;">
+                                    Images
+                                    <span class="text-body-secondary" style="font:small;">Cite Images</span>
+                                </h5>
+                                <div class="col-lg-12 mx-auto">
+                                    <div id="carouselExampleCaptions3" class="carousel slide col-lg-9 mx-auto" style="padding: 8px; margin-bottom: 1px;">
+                                        <div class="carousel-indicators">
+                                            <button type="button" data-bs-target="#carouselExampleCaptions3" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
+                                            <button type="button" data-bs-target="#carouselExampleCaptions3" data-bs-slide-to="1" aria-label="Slide 2"></button>
+                                            <button type="button" data-bs-target="#carouselExampleCaptions3" data-bs-slide-to="2" aria-label="Slide 3"></button>
+
+                                            <button type="button" data-bs-target="#carouselExampleCaptions3" data-bs-slide-to="3" aria-label="Slide 4"></button>
+                                            <button type="button" data-bs-target="#carouselExampleCaptions3" data-bs-slide-to="4" aria-label="Slide 5"></button>
+                                            <button type="button" data-bs-target="#carouselExampleCaptions3" data-bs-slide-to="5" aria-label="Slide 6"></button>
+                                            <button type="button" data-bs-target="#carouselExampleCaptions3" data-bs-slide-to="6" aria-label="Slide 7"></button>
+
+                                        </div>
+                                        <div class="carousel-inner">
+                                            <div class="carousel-item active">
+                                                <img src="~/images/measles_pics/measles-1.jpg" class="card-img img-fluid" width="600" height="600" style="aspect-ratio: auto;" preserveAspectRatio="xMidYMid slice" loading="lazy" alt="...">
+                                                <div class="carousel-caption d-none d-md-block">
+                                                    <h5></h5>
+                                                    <p></p>
+                                                </div>
+                                            </div>
+                                            <div class="carousel-item">
+                                                <img src="~/images/measles_pics/measles-3.jpg" class="card-img img-fluid" width="600" height="600" style="aspect-ratio: auto;" preserveAspectRatio="xMidYMid slice" loading="lazy" alt="...">
+                                                <div class="carousel-caption d-none d-md-block">
+                                                    <h5></h5>
+                                                    <p></p>
+                                                </div>
+                                            </div>
+                                            <div class="carousel-item">
+                                                <img src="~/images/measles_pics/measles-4.jpg" class="card-img img-fluid" width="600" height="900" style="aspect-ratio: auto;" preserveAspectRatio="xMidYMid slice" loading="lazy" alt="...">
+                                                <div class="carousel-caption d-none d-md-block">
+                                                    <h5></h5>
+                                                    <p></p>
+                                                </div>
+                                            </div>
+
+
+
+
+                                            <div class="carousel-item">
+                                                <img src="~/images/measles_pics/measles-5.jpg" class="card-img img-fluid" width="600" height="900" style="aspect-ratio: auto;" preserveAspectRatio="xMidYMid slice" loading="lazy" alt="...">
+                                                <div class="carousel-caption d-none d-md-block">
+                                                    <h5></h5>
+                                                    <p></p>
+                                                </div>
+                                            </div>
+                                            <div class="carousel-item">
+                                                <img src="~/images/measles_pics/measles-6.jpg" class="card-img img-fluid" width="600" height="900" style="aspect-ratio: auto;" preserveAspectRatio="xMidYMid slice" loading="lazy" alt="...">
+                                                <div class="carousel-caption d-none d-md-block">
+                                                    <h5></h5>
+                                                    <p></p>
+                                                </div>
+                                            </div>
+                                            <div class="carousel-item">
+                                                <img src="~/images/measles_pics/measles-7.jpg" class="card-img img-fluid" width="600" height="900" style="aspect-ratio: auto;" preserveAspectRatio="xMidYMid slice" loading="lazy" alt="...">
+                                                <div class="carousel-caption d-none d-md-block">
+                                                    <h5></h5>
+                                                    <p></p>
+                                                </div>
+                                            </div>
+                                            <div class="carousel-item">
+                                                <img src="~/images/measles_pics/measles-8.jpg" class="card-img img-fluid" width="600" height="900" style="aspect-ratio: auto;" preserveAspectRatio="xMidYMid slice" loading="lazy" alt="...">
+                                                <div class="carousel-caption d-none d-md-block">
+                                                    <h5></h5>
+                                                    <p></p>
+                                                </div>
+                                            </div>
+
+
+                                        </div>
+                                        <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleCaptions3" data-bs-slide="prev">
+                                            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                                            <span class="visually-hidden">Previous</span>
+                                        </button>
+                                        <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleCaptions3" data-bs-slide="next">
+                                            <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                                            <span class="visually-hidden">Next</span>
+                                        </button>
+                                    </div>
+
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+                    <hr class="featurette-divider">
+
+                    <!----------Gallery end----------->
+
+                <br />
+
+
+
+
+
+                <h4 id="scrollspyHeading3"><span class="btn btn-outline-secondary btn-lg px-4" type="button" style="color:black; border-color: black;" data-bs-toggle="collapse" data-bs-target="#collapseWidthExample3" aria-expanded="false" aria-controls="collapseWidthExample3">Symptoms and Transmission</span></h4>
+
+
+                <br />
+                <div class="collapse collapse" id="collapseWidthExample3">
+
+
+                    <div class="row featurette">
+                        <div class="col-md-7">
+                            <h2 class="featurette-heading fw-normal lh-1">
+                                Symptoms and Transmission:
+                                <span class="text-body-secondary"></span>
+                            </h2>
+
+
+                            <p class="lead">
+                                Symptoms and Transmission:
+                            </p>
+
+                            <span>
+                                <cite>From the CDC website:https://www.cdc.gov/measles/index.html</cite>
+                            </span>
+                            <br />
+                            <p class="card-header">Symptoms:</p>
+
+
+                            <br />
+
+                            <div class="card-group" style="text-align: left;padding: 8px;">
+                                <h3 style="font-weight:700;">Signs and symptoms:</h3>
+                                <div>
+                                    <p>
+                                        Symptoms usually begin 7 to 14 days after infection.
+                                        <br />
+                                        <i>Measles isn't just a little rash. Measles can be dangerous, especially for babies and young children.</i>
+                                        <br />
+                                        7–14 days after a measles infection: first symptoms show
+                                        Measles symptoms appear 7 to 14 days after contact with the virus. Measles typically begins with:
+                                    </p>
+
+                                    <p style="font-weight:700;">Initial Symptoms begin 7–14 days after a patient is infected with measles.</p>
+                                    <p>These are the first symptoms the patient may have:</p>
+                                    <ul>
+                                        <li>
+                                            High fever (may spike to more than 104°)
+                                        </li>
+                                        <li>Cough</li>
+                                        <li>Runny nose (coryza)</li>
+                                        <li>Red, watery eyes (conjunctivitis)</li>
+                                    </ul>
+
+
+                                    <p style="font-weight:700;">Symptoms:2–3 days after initial symptoms begin, Koplik spots may appear inside the mouth </p>
+                                    <ul>
+                                        <li>
+                                            Koplik spots
+                                        </li>
+                                        <li>
+                                            Tiny white spots (Koplik spots) may appear inside the mouth two to three days after symptoms begin
+                                        </li>
+                                    </ul>
+
+                                    <p style="font-weight:700;">Symptoms: Measles rash:</p>
+                                    <p>Occour 3–5 days after initial symptoms start. It usually begins as flat red spots that appear on the face at the hairline. They then spread downward to the neck, trunk, arms, legs, and feet.</p>
+                                    <br />
+                                    <ul>
+                                        <li>
+                                            Small raised bumps may also appear on top of the flat red spots.
+                                        </li>
+                                        <li>
+                                            The spots may become joined together as they spread from the head to the rest of the body.
+                                        </li>
+                                        <li>
+                                            When the rash appears, a person's fever may spike to more than 104° Fahrenheit.
+                                        </li>
+                                    </ul>
+                                </div>
+
+                            </div>
+
+                            <br />
+                            <br />
+                            <p class="card-header">Transmission:</p>
+                            <p>
+                                <b>Transmission:</b>
+                                <br />
+                                <span>
+                                    <cite>cite WHO</cite>
+                                </span>
+                                <br />
+                                <div>
+                                    <b>Who is at risk?</b>
+                                    <br />
+                                    <p>
+                                        Any non-immune person (not vaccinated or vaccinated but did not develop immunity) can become infected. Unvaccinated young children and pregnant persons are at highest risk of severe measles complications.
+                                    </p>
+                                    <p>
+                                        <b>Transmission:</b>
+                                        <br />
+                                        Measles is one of the world’s most contagious diseases,<b> spread by contact with infected nasal or throat secretions (coughing or sneezing) or breathing the air that was breathed by someone with measles. The virus remains active and contagious in the air or on infected surfaces for up to two hours.</b> For this reason, it is very infectious, and one person infected by measles can infect nine out of 10 of their unvaccinated close contacts.<b> It can be transmitted by an infected person from four days prior to the onset of the rash to four days after the rash erupts.</b>
+                                    </p>
+                                    <p>
+                                        Measles outbreaks can result in severe complications and deaths, especially among young, malnourished children. In countries close to measles elimination, cases imported from other countries remain an important source of infection.
+                                    </p>
+                                </div>
+
+                            <p>
+                                <b>Risk factors: </b>
+                                <cite>CDC</cite>
+                            <p>
+                                Who is at risk?
+                                <br />
+                                Measles can be serious in all age groups. However, there are several groups that are more likely to suffer from measles complications:
+
+                                Children younger than 5 years of age
+                                Adults older than 20 years of age
+                                Pregnant women
+                                People with weakened immune systems, such as from leukemia or HIV infection
+                            </p>
+
+                            </p>
+
+                            <div>
+                                <b>Complications: </b>
+                                <div>
+                                    <h3 style="font-weight:700;">Complications:</h3>
+                                    <cite>From the CDC website:https://www.cdc.gov/measles/index.html</cite>
+
+                                    <p>
+                                        Common complications from measles are:
+
+                                        Ear infections occur in about 1 out of every 10 children with measles.
+                                        Diarrhea is reported in less than 1 out of 10 people with measles.
+                                    </p>
+
+                                    <b>Common complications:</b>
+                                    <ul>
+                                        <li>
+                                            <b>Ear infections</b> occur in about 1 out of every 10 children with measles.
+                                        </li>
+                                        <li>
+                                            <b>Diarrhea</b> is reported in less than 1 out of 10 people with measles.
+                                        </li>
+                                    </ul>
+
+                                    <br />
+
+                                    <h4>
+                                        Severe complications in children and adults:
+                                    </h4>
+                                    <p>
+                                        Some people may suffer from severe complications, such as pneumonia (infection of the lungs) and encephalitis (swelling of the brain).
+                                        They may need to be hospitalized and could die.
+                                    </p>
+                                    <ul>
+                                        <li>
+                                            Hospitalization: About 1 in 5 unvaccinated people in the U.S. who get measles is hospitalized.
+                                        </li>
+                                        <li>
+                                            Pneumonia: As many as 1 out of every 20 children with measles gets pneumonia, the most common cause of death from measles in young children.
+                                        </li>
+                                        <li>
+                                            Encephalitis: About 1 child out of every 1,000 who get measles will develop encephalitis (swelling of the brain). This can lead to convulsions and leave the child deaf or with intellectual disability.
+                                        </li>
+                                        <li>
+                                            Death: Nearly 1 to 3 of every 1,000 children who become infected with measles will die from respiratory and neurologic complications.
+                                        </li>
+                                        <li>
+                                            Complications during pregnancy: If you are pregnant and have not had the MMR vaccine, measles may cause birth prematurely, or have a low-birth-weight baby.
+                                        </li>
+
+                                    </ul>
+                                    <br />
+
+                                    <h5>
+                                        Long-term complications
+                                    </h5>
+                                    <p>
+                                        Subacute sclerosing panencephalitis (SSPE) is a very rare, but fatal disease of the central nervous system. It results from a measles virus infection acquired earlier in life.
+                                        <br />
+                                        About SSPE
+                                        <br />
+
+                                        SSPE generally develops 7 to 10 years after a person has measles, even though the person seems to have fully recovered from the illness.
+                                        <br />
+                                        Since measles was eliminated in 2000, SSPE is rarely reported in the United States.
+                                        <br />
+                                        Among people who contracted measles during the resurgence in the United States in 1989 to 1991, 7 to 11 out of every 100,000 were estimated to be at risk for developing SSPE.
+                                        <br />
+                                        The risk of developing SSPE may be higher for a person who gets measles before they are 2 years of age.
+                                    </p>
+
+
+                                </div>
+
+                            </div>
+                        </div>
+                        <div class="col-md-5">
+                            <img class="bd-placeholder-img bd-placeholder-img-lg featurette-image img-fluid mx-auto" src="~/images/pics_diphtheria/diphtheria-2.jpg" role="img" aria-label="Placeholder: 500x500" preserveAspectRatio="xMidYMid slice" focusable="false" />
+                        </div>
+                    </div>
+
+
+                </div>
+
+
+
+
+
+
+                <h4 id="scrollspyHeading4"><span class="btn btn-outline-secondary btn-lg px-4" style="color:black; border-color: black;" type="button" data-bs-toggle="collapse" data-bs-target="#collapseWidthExample4" aria-expanded="false" aria-controls="collapseWidthExample3">Treatment</span></h4>
+
+
+                <div class="collapse collapse" id="collapseWidthExample4">
+
+
+                    <div class="row featurette">
+                        <div class="col-md-7">
+                            <h2 class="featurette-heading fw-normal lh-1">
+                                Treatment
+                                <span class="text-body-secondary"></span>
+                            </h2>
+                            <p class="lead">
+                                Treatment and Management Strategies
+                                <br />
+                                <span>
+                                    <small>
+                                        <cite>cite WHO</cite>
+                                    </small>
+                                </span>
+                            </p>
+
+                            <p class="card-header">Treatment:</p>
+                            <div class="card-group">
+                                <p>
+
+                                    <cite>cite WHO</cite>
+
+                                </p>
+
+                                <div>
+                                    <h3 style="font-weight:700;">Treatment:</h3>
+                                    <p>
+                                        There is no specific treatment for measles. Caregiving should focus on relieving symptoms, making the person comfortable and preventing complications.
+                                        <br />
+                                        Drinking enough water and treatments for dehydration can replace fluids lost to diarrhoea or vomiting. Eating a healthy diet is also important.
+                                        <br />
+                                        Doctors may use antibiotics to treat pneumonia and ear and eye infections.
+                                        <br />
+                                        <b>All children or adults with measles should receive two doses of vitamin A supplements, given 24 hours apart.</b> This restores low vitamin A levels that occur even in well-nourished children. It can help prevent eye damage and blindness. Vitamin A supplements may also reduce the number of measles deaths.
+                                    </p>
+                                </div>
+
+
+                            </div>
+
+                            <div class="card-group">
+
+                                <p>
+                                    <b>Prevention: </b>
+
+                                    <cite>cite WHO</cite>
+
+                                </p>
+
+                                <div>
+                                    <h3 style="font-weight:700;">Prevention:</h3>
+                                    <p>
+                                        Community-wide vaccination is the most effective way to prevent measles. All children should be vaccinated against measles. The vaccine is safe, effective and inexpensive.
+                                        <br />
+                                        Children should receive two doses of the vaccine to ensure they are immune. The first dose is usually given at 9 months of age in countries where measles is common and 12–15 months in other countries. A second dose should be given later in childhood, usually at 15–18 months.
+                                        <br />
+                                        The measles vaccine is given alone or often combined with vaccines for mumps, rubella and/or varicella.
+                                        <br />
+                                        Routine measles vaccination, combined with mass immunization campaigns in countries with high case rates are crucial for reducing global measles deaths. The measles vaccine has been in use for about 60 years and costs less than US$ 1 per child. The measles vaccine is also used in emergencies to stop outbreaks from spreading. The risk of measles outbreaks is particularly high amongst refugees, who should be vaccinated as soon as possible.
+                                        <br />
+                                        Combining vaccines slightly increases the cost but allows for shared delivery and administration costs and importantly, adds the benefit of protection against rubella, the most common vaccine preventable infection that can infect babies in the womb.
+                                        <br />
+                                        In 2023, 74% of children received both doses of the measles vaccine, and about 83% of the world's children received one dose of measles vaccine by their first birthday. Two doses of the vaccine are recommended to ensure immunity and prevent outbreaks, as not all children develop immunity from the first dose.
+                                        <br />
+                                        Approximately 22 million infants missed at least one dose of measles vaccine through routine immunization in 2023.
+                                    </p>
+                                </div>
+
+                            </div>
+
+                        </div>
+                        <div class="col-md-5">
+                            <img class="bd-placeholder-img bd-placeholder-img-lg featurette-image img-fluid mx-auto" width="500" height="500" src="~/images/measles_pics/measles-10.jpg" role="img" aria-label="Placeholder: 500x500" preserveAspectRatio="xMidYMid slice" focusable="false" />
+                        </div>
+                    </div>
+
+
+                </div>
+
+
+            </div>
+
+            </<div>
+            </div>
+        </div>
+
+    </div>
+    <!--end scrolspy-------------------------->
+    <!----------------------------Measles start-------------------------------------->
+
+
+
+
+
+    </div>
+
+</div>
+<!--Landing page body end------------------------------------>
+</div>
+
+
+
+
+<!--script
+
+<script src="~/js/microsoft-signalr/signalr.js"></script>
+
+<script type="text/javascript">
+
+   
+
+        document.addEventListener('DOMContentLoaded', function () {
+    
+            var messageInput = document.getElementById('message');
+            const nameuser = document.getElementById('chatname').innerHTML;
+
+
+            messageInput.focus();
+
+            // Start the connection.
+            var connection = new signalR.HubConnectionBuilder()
+                                .withUrl('/chathub')
+                                .build();
+
+            // Create a function that the hub can call to broadcast messages.
+            connection.on('broadcastMessage', function (nameuser, message) {
+                // Html encode display name and message.
+
+                var encodedName = nameuser;
+                console.log(encodedName);
+
+                var encodedMsg = message;
+                console.log(encodedMsg);
+
+
+                // Add the message to the page.
+            var liElement = document.createElement('li');
+
+            liElement.innerHTML = '<strong>' + encodedName + '</strong>:&nbsp;&nbsp;' + encodedMsg;
+          
+            document.getElementById('discussion').appendChild(liElement);
+                
+            });
+
+
+         // Transport fallback functionality is now built into start.
+        connection.start()
+            .then(function () {
+                console.log('connection started');
+                document.getElementById('sendmessage').addEventListener('click', function (event) {
+                    // Call the Send method on the hub.
+                    connection.invoke('send',nameuser ,messageInput.value);
+                    // Clear text box and reset focus for next comment.
+                    messageInput.value = '';
+                    messageInput.focus();
+                    event.preventDefault();
+                });
+        })
+        .catch(error => {
+            console.error(error.message);
+        });
+
+
+        });
+
+
+
+
+
+</script>-->
+
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}
+
+                    

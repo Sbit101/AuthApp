@@ -1,0 +1,1095 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+}
+
+
+@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+}
+
+
+
+@model AuthApp.Models.MeaslesCase
+
+
+<style>
+
+    .card {
+        position: relative;
+        display: block;
+        flex-direction: column;
+        min-width: 0;
+        word-wrap: break-word;
+        background-color: gainsboro;
+        color: black;
+        background-clip: border-box;
+        border: 1px solid rgba(0, 0, 0, .125);
+        border-radius: .25rem;
+    }
+
+    <!-- heros-- >
+    .bd-placeholder-img {
+        font-size: 1.125rem;
+        text-anchor: middle;
+        -webkit-user-select: none;
+        -moz-user-select: none;
+        user-select: none;
+    }
+
+    {
+        font-size: 3.5rem;
+    }
+
+    }
+
+    .b-example-divider {
+        width: 100%;
+        height: 3rem;
+        background-color: rgba(0, 0, 0, .1);
+        border: solid rgba(0, 0, 0, .15);
+        border-width: 1px 0;
+        box-shadow: inset 0 .5em 1.5em rgba(0, 0, 0, .1), inset 0 .125em .5em rgba(0, 0, 0, .15);
+    }
+
+    .b-example-vr {
+        flex-shrink: 0;
+        width: 1.5rem;
+        height: 100vh;
+    }
+
+    .bi {
+        vertical-align: -.125em;
+        fill: currentColor;
+    }
+
+    .nav-scroller {
+        position: relative;
+        z-index: 2;
+        height: 2.75rem;
+        overflow-y: hidden;
+    }
+
+        .nav-scroller .nav {
+            display: flex;
+            flex-wrap: nowrap;
+            padding-bottom: 1rem;
+            margin-top: -1px;
+            overflow-x: auto;
+            text-align: center;
+            white-space: nowrap;
+            -webkit-overflow-scrolling: touch;
+        }
+
+    .btn-bd-primary {
+        --bd-violet-bg: #712cf9;
+        --bd-violet-rgb: 112.520718, 44.062154, 249.437846;
+        --bs-btn-font-weight: 600;
+        --bs-btn-color: var(--bs-white);
+        --bs-btn-bg: var(--bd-violet-bg);
+        --bs-btn-border-color: var(--bd-violet-bg);
+        --bs-btn-hover-color: var(--bs-white);
+        --bs-btn-hover-bg: #6528e0;
+        --bs-btn-hover-border-color: #6528e0;
+        --bs-btn-focus-shadow-rgb: var(--bd-violet-rgb);
+        --bs-btn-active-color: var(--bs-btn-hover-color);
+        --bs-btn-active-bg: #5a23c8;
+        --bs-btn-active-border-color: #5a23c8;
+    }
+
+    .bd-mode-toggle {
+        z-index: 1500;
+    }
+
+        .bd-mode-toggle .dropdown-menu .active .bi {
+            display: block !important;
+        }
+
+
+    .accordion-button:focus {
+        z-index: 3;
+        border-color: #86b7fe;
+        outline: 0;
+        box-shadow: 0 0 0 .25rem rgba(13, 110, 253, .25);
+    }
+
+    .accordion-button:not(.collapsed) {
+        color: #0c63e4;
+        background-color: #e7f1ff;
+        box-shadow: inset 0 -1px 0 rgba(0, 0, 0, .125);
+    }
+
+    .carousel-control-next-icon {
+        background-image: url(data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16' fill='%23fff'%3e%3cpath d='M4.646 1.646a.5.5 0 0 1 .708 0l6 6a.5.5 0 0 1 0 .708l-6 6a.5.5 0 0 1-.708-.708L10.293 8 4.646 2.354a.5.5 0 0 1 0-.708z'/%3e%3c/svg%3e);
+        background-color: black;
+    }
+
+    .carousel-control-prev-icon {
+        background-image: url(data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16' fill='%23fff'%3e%3cpath d='M11.354 1.646a.5.5 0 0 1 0 .708L5.707 8l5.647 5.646a.5.5 0 0 1-.708.708l-6-6a.5.5 0 0 1 0-.708l6-6a.5.5 0 0 1 .708 0z'/%3e%3c/svg%3e);
+        background-color: black;
+    }
+
+
+
+    <!-- .label {
+        display: inline-block;
+        font-weight: 300;
+        font-size: 12px;
+    }
+    -->
+    .label {
+        display: inline-block;
+        font-weight: normal;
+    }
+
+    .badge {
+        display: block;
+        padding: .35em .65em;
+        font-size: .75em;
+        font-weight: 700;
+        line-height: 1;
+        color: #fff;
+        text-align: center;
+        white-space: nowrap;
+        vertical-align: baseline;
+        border-radius: .25rem;
+    }
+
+    .img-thumbnail {
+        padding: .25rem;
+        background-color: #fff;
+        border: 1px solid #dee2e6;
+        border-radius: .25rem;
+        max-width: 100%;
+        height: auto;
+        float: right;
+    }
+
+</style>
+
+
+
+
+
+
+<h1>
+    Create Measles Case
+</h1>
+
+
+<div class="badge">
+    <p style="color:red;">
+        @ViewBag.FileStats
+    </p>
+</div>
+
+
+<h4>
+    MeaslesCase
+</h4>
+<hr />
+
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-md-12">
+            <form asp-action="Create" enctype="multipart/form-data">
+                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
+
+                <div class="section px-4 py-5 my-5 text-black-50 rounded-3 border shadow-lg" style="background-color: aliceblue;">
+
+                    <!--
+                    <span class="badge text-dark" style="background-color: #9acbff;">Doctor Info</span>
+                    <br />
+                    -->
+                    <!--#3232323b;-->
+
+                    <div class="col">
+
+                        <div class="card sm-3" style="">
+
+                            <div class="icon text-primary">
+                                <i class="fas fa-dollar-sign"></i>
+                                <img src="~/logo/health_and_safety_80dp_white.png" class="img-thumbnail" height="80" />
+                            </div>
+                            <!--padding: 6px; margin-bottom: 8px;-->
+
+                            <div class="card-body" style="text-align:unset;">
+                                <h5 class="card-title">Doctor Information:</h5>
+                                <p class="card-text">
+                                    <small class="text-muted">
+                                        Please fill Doctor Information:
+                                    </small>
+                                </p>
+
+
+                                <div class="row g-3">
+                                    <div class="col-sm-12">
+                                        <label asp-for="NameOfTreatingPhysician" class="control-label"></label>
+                                        <input asp-for="NameOfTreatingPhysician" class="form-control" />
+                                        <span asp-validation-for="NameOfTreatingPhysician" class="text-danger"></span>
+                                    </div>
+                                    <div class="col-sm-4">
+                                        <label asp-for="NameOfHealthcareCentre" class="control-label"></label>
+                                        <input asp-for="NameOfHealthcareCentre" class="form-control" />
+                                        <span asp-validation-for="NameOfHealthcareCentre" class="text-danger"></span>
+                                    </div>
+                                    <div class="col-sm-4">
+                                        <label asp-for="HealthcareCentreTelephone" class="control-label"></label>
+                                        <input asp-for="HealthcareCentreTelephone" class="form-control" />
+                                        <span asp-validation-for="HealthcareCentreTelephone" class="text-danger"></span>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+
+
+
+                <div class="section px-4 py-5 my-5 text-center rounded-3 border shadow-lg" style="padding: 6px; margin-bottom: 8px; background-color: aliceblue; color:black;">
+
+                    <!--
+                    <span class="badge text-dark" style="background-color: #ff9afb">Patient Info:</span>
+                    <br/>
+
+                    -->
+                    <div class="col">
+                        <div class="card sm-3">
+
+                            <div class="icon text-primary">
+                                <i class="fas fa-dollar-sign"></i>
+                                <img src="~/logo/health_and_safety_80dp_white.png" class="img-thumbnail" height="80" />
+                            </div>
+
+
+                            <div class="card-body" style="text-align:left;">
+                                <h5 class="card-title">Paitent Information:</h5>
+                                <p class="card-text">
+                                    <small class="text-black-50">
+                                        Please Fill Patient Information:
+                                    </small>
+                                </p>
+
+
+                                <div class="row g-3">
+                                    <div class="col-sm-7">
+                                        <label asp-for="PatientFirstName" class="control-label"></label>
+                                        <input asp-for="PatientFirstName" class="form-control" />
+                                        <span asp-validation-for="PatientFirstName" class="text-danger"></span>
+                                    </div>
+                                    <div class="col-sm">
+                                        <label asp-for="PatientLastName" class="control-label"></label>
+                                        <input asp-for="PatientLastName" class="form-control" />
+                                        <span asp-validation-for="PatientLastName" class="text-danger"></span>
+                                    </div>
+                                    <div class="col-sm">
+                                        <label asp-for="PatientAge" class="control-label"></label>
+                                        <input asp-for="PatientAge" class="form-control" />
+                                        <span asp-validation-for="PatientAge" class="text-danger"></span>
+                                    </div>
+                                </div>
+
+
+                                <div class="row g-3">
+                                    <div class="col-sm-3">
+                                        <label asp-for="PatientSex" class="control-label"></label>
+                                        <input asp-for="PatientSex" class="form-control" />
+                                        <span asp-validation-for="PatientSex" class="text-danger"></span>
+                                    </div>
+
+                                    <div class="col-sm">
+                                        <label asp-for="PatientCountry" class="control-label"></label>
+                                        <input asp-for="PatientCountry" class="form-control" />
+                                        <span asp-validation-for="PatientCountry" class="text-danger"></span>
+                                    </div>
+
+                                    <div class="col-sm">
+                                        <label asp-for="PatientTelephoneNumber" class="control-label"></label>
+                                        <input asp-for="PatientTelephoneNumber" class="form-control" />
+                                        <span asp-validation-for="PatientTelephoneNumber" class="text-danger"></span>
+                                    </div>
+                                </div>
+
+                                <div class="row g-3">
+                                    <div class="col-sm-3">
+                                        <label asp-for="PatientCity" class="control-label"></label>
+                                        <input asp-for="PatientCity" class="form-control" />
+                                        <span asp-validation-for="PatientCity" class="text-danger"></span>
+                                    </div>
+
+                                    <div class="col-sm">
+                                        <label asp-for="PatientAddress" class="control-label"></label>
+                                        <input asp-for="PatientAddress" class="form-control" />
+                                        <span asp-validation-for="PatientAddress" class="text-danger"></span>
+                                    </div>
+
+                                    <div class="col-sm">
+                                        <label asp-for="PatientHouseHoldSize" class="control-label"></label>
+                                        <input asp-for="PatientHouseHoldSize" class="form-control" />
+                                        <span asp-validation-for="PatientHouseHoldSize" class="text-danger"></span>
+                                    </div>
+                                </div>
+
+
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+
+
+
+                <div class="section px-4 py-5 my-5 text-center rounded-3 border shadow-lg" style="padding: 6px; margin-bottom: 8px; background-color: aliceblue;">
+
+                    <!--
+                    <span class="badge text-dark" style="background-color: #ff656ac9;">Symptom Info:</span>
+
+                    -->
+                    <div class="col">
+                        <div class="card col-sm-12" style="">
+
+
+                            <div class="icon text-primary">
+                                <i class="fas fa-dollar-sign"></i>
+                                <img src="~/logo/health_and_safety_80dp_white.png" class="img-thumbnail" height="80" />
+                            </div>
+
+                            <div class="card-body" style="text-align:left;">
+                                <h5 class="card-title">Symptom Information</h5>
+                                <p class="card-text">
+                                    <small class="text-muted">
+                                        Please fill Symptoms information:
+                                    </small>
+                                </p>
+
+                                <div class="card-body">
+
+                                    <div class="row featurette">
+                                        <div class="col-md-7">
+                                            <h2 class="featurette-heading fw-normal lh-1">
+                                                Symptoms and Transmission:
+                                                <span class="text-body-secondary"></span>
+                                            </h2>
+
+
+                                            <p class="lead">
+                                                Symptoms and Transmission:
+                                            </p>
+
+                                            <span>
+                                                <cite>From the CDC website:https://www.cdc.gov/measles/index.html</cite>
+                                            </span>
+                                            <br />
+                                            <p class="card-header">Symptoms:</p>
+
+
+                                            <br />
+
+                                            <div class="card-group" style="text-align: left;padding: 8px;">
+                                                <h3 style="font-weight:700;">Signs and symptoms:</h3>
+                                                <div>
+                                                    <p>
+                                                        Symptoms usually begin 7 to 14 days after infection.
+                                                        <br />
+                                                        <i>Measles isn't just a little rash. Measles can be dangerous, especially for babies and young children.</i>
+                                                        <br />
+                                                        7–14 days after a measles infection: first symptoms show
+                                                        Measles symptoms appear 7 to 14 days after contact with the virus. Measles typically begins with:
+                                                    </p>
+
+                                                    <p style="font-weight:700;">Initial Symptoms begin 7–14 days after a patient is infected with measles.</p>
+                                                    <p>These are the first symptoms the patient may have:</p>
+                                                    <ul>
+                                                        <li>
+                                                            High fever (may spike to more than 104°)
+                                                        </li>
+                                                        <li>Cough</li>
+                                                        <li>Runny nose (coryza)</li>
+                                                        <li>Red, watery eyes (conjunctivitis)</li>
+                                                    </ul>
+
+
+                                                    <p style="font-weight:700;">Symptoms:2–3 days after initial symptoms begin, Koplik spots may appear inside the mouth </p>
+                                                    <ul>
+                                                        <li>
+                                                            Koplik spots
+                                                        </li>
+                                                        <li>
+                                                            Tiny white spots (Koplik spots) may appear inside the mouth two to three days after symptoms begin
+                                                        </li>
+                                                    </ul>
+
+                                                    <p style="font-weight:700;">Symptoms: Measles rash:</p>
+                                                    <p>Occour 3–5 days after initial symptoms start. It usually begins as flat red spots that appear on the face at the hairline. They then spread downward to the neck, trunk, arms, legs, and feet.</p>
+                                                    <br />
+                                                    <ul>
+                                                        <li>
+                                                            Small raised bumps may also appear on top of the flat red spots.
+                                                        </li>
+                                                        <li>
+                                                            The spots may become joined together as they spread from the head to the rest of the body.
+                                                        </li>
+                                                        <li>
+                                                            When the rash appears, a person's fever may spike to more than 104° Fahrenheit.
+                                                        </li>
+                                                    </ul>
+                                                </div>
+
+                                            </div>
+
+                           
+
+                                </div> 
+                                  
+
+
+                                <!--pic start-->
+                                <div id="carouselExampleCaptions" class="carousel slide col-lg-9 mx-auto">
+                                    <div class="carousel-indicators">
+                                        <button type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
+                                        <button type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide-to="1" aria-label="Slide 2"></button>
+                                        <button type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide-to="2" aria-label="Slide 3"></button>
+                                    </div>
+                                    <div class="carousel-inner">
+                                        <div class="carousel-item active">
+                                            <img src="~/images/pics_diphtheria/diphtheria-2.jpg" class="card-img img-fluid" width="auto" height="auto" style="aspect-ratio: auto;" preserveAspectRatio="xMidYMid slice" loading="lazy" alt="...">
+                                            <div class="carousel-caption d-none d-md-block">
+                                                <h5></h5>
+                                                <p></p>
+                                            </div>
+                                        </div>
+                                        <div class="carousel-item">
+                                            <img src="~/images/measles_pics/measles-1.jpg" class="card-img img-fluid" width="auto" height="auto" style="aspect-ratio: auto;" preserveAspectRatio="xMidYMid slice" loading="lazy" alt="...">
+                                            <div class="carousel-caption d-none d-md-block">
+                                                <h5></h5>
+                                                <p></p>
+                                            </div>
+                                        </div>
+                                        <div class="carousel-item">
+                                                    <img src="~/images/measles_pics/measles-3.jpg" class="card-img img-fluid" width="600" height="900" style="aspect-ratio: auto;" preserveAspectRatio="xMidYMid slice" loading="lazy" alt="...">
+                                            <div class="carousel-caption d-none d-md-block">
+                                                <h5></h5>
+                                                <p></p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide="prev">
+                                        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                                        <span class="visually-hidden">Previous</span>
+                                    </button>
+                                    <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide="next">
+                                        <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                                        <span class="visually-hidden">Next</span>
+                                    </button>
+                                </div>
+                                <!--pic end-->
+                                <div class="row g-1">
+                                    <div class="col-sm-12">
+                                        <label asp-for="PatientSymptomsPositiveForMeasles" class="control-label"></label>
+                                        <textarea asp-for="PatientSymptomsPositiveForMeasles" class="form-control" style="height:100px;"></textarea>
+                                        <span asp-validation-for="PatientSymptomsPositiveForMeasles" class="text-danger"></span>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+                </div>
+
+
+
+                <div class="section px-4 py-5 my-5 text-center rounded-3 border shadow-lg" style="padding: 6px; margin-bottom: 8px; background-color: aliceblue;">
+
+                    <!--
+                    <span class="tab-content text-dark" style="background-color: #f9d203;">Date Info:</span>
+                    -->
+                    <br />
+                    <div class="col" style="">
+                        <div class="card sm-3" style="">
+
+
+                            <div class="icon text-primary">
+                                <img src="~/logo/health_and_safety_80dp_white.png" class="img-thumbnail" height="80" />
+                            </div>
+
+                            <div class="card-body" style="text-align:left;">
+                                <h5 class="card-title">Date Information</h5>
+                                <p class="card-text">
+                                    <small class="text-muted">
+                                        Please Fill Date Information:
+                                    </small>
+                                </p>
+
+                                <div class="row g-3">
+                                    <div class="col-sm-12">
+                                        <label asp-for="DateofFirstClinicalDiagnosis" class="label"></label>
+                                        <input asp-for="DateofFirstClinicalDiagnosis" class="form-control" />
+                                        <span asp-validation-for="DateofFirstClinicalDiagnosis" class="text-danger"></span>
+                                    </div>
+                                    <div class="col-sm">
+                                        <label asp-for="DateSymptomsOnset" class="label"></label>
+                                        <input asp-for="DateSymptomsOnset" class="form-control" />
+                                        <span asp-validation-for="DateSymptomsOnset" class="text-danger"></span>
+                                    </div>
+                                    @{
+                                        //<div class="col-sm">
+                                        //    <label asp-for="DateOnsetOfRash" class="label"></label>
+                                        //    <input asp-for="DateOnsetOfRash" class="form-control" />
+                                        //    <span asp-validation-for="DateOnsetOfRash" class="text-danger"></span>
+                                        //</div>
+                                    }
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+
+
+
+                <div class="card px-4 py-5 my-5 text-center rounded-3 border shadow-lg" style="padding: 6px; margin-bottom: 8px; background-color: aliceblue;">
+
+
+                    <h5 class="card-title">Please Upload Rash Image:</h5>
+
+
+                    <div class="form-group" style="padding: 16px;">
+
+                        <label asp-for="PatientMeaslesPicture" class="control-label">Rash Image Upload</label>
+                        <img id="patientRashPicture" style="width: 300px; height: 200px; margin: 8px; object-fit: cover;" src="">
+
+                        <input type="file"
+                               accept=".png,.jpg,.jpeg,.gif,.tif"
+                               asp-for="PatientMeaslesPicture"
+                               name="patientRashPicture"
+                               class="form-control"
+                               style=""
+                               onchange="document.getElementById('patientRashPicture').src = window.URL.createObjectURL(this.files[0])" />
+
+
+                        <span asp-validation-for="PatientMeaslesPicture" class="text-danger"></span>
+
+                    </div>
+                </div>
+
+                <div class="form-group" style="text-align:center;">
+                    <!--  <input type="submit" value="Create" class="btn btn-primary" />-->
+                    <input type="submit" value="Create" class="btn btn-success btn-lg px-4 gap-3" style="width: 250px;" />
+
+                </div>
+            </form>
+        </div>
+    </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    <!----------------------------Measles start-------------------------------------->
+    <hr class="featurette-divider">
+    <div class="col-lg-12 container my-5">
+        <div class="row p-4 pb-0 pe-lg-0 pt-lg-5 align-items-center rounded-3 border shadow-lg">
+
+            <nav id="navbar-example3" class="navbar bg-body-tertiary px-3 mb-3">
+                <a class="navbar-brand" href="#" style="color:black;">Measles Patient Form</a>
+
+                <div class="btn btn-outline-primary" style="padding:8px; margin-bottom:2px;">Measles Case Form</div>
+
+            </nav>
+
+
+
+            <div data-bs-spy="scroll" data-bs-target="#navbar-example3" data-bs-root-margin="0px 0px -40%" data-bs-smooth-scroll="true" class="scrollspy-example bg-body-tertiary p-3 rounded-2" tabindex="0">
+                <h4 id="scrollspyHeading1">Overview</h4>
+
+                <div class="row featurette">
+                    <div class="col-md-7">
+                        <h2 class="featurette-heading fw-normal lh-1">
+                            Measles
+                            <span class="text-body-secondary"></span>
+                        </h2>
+                        <p class="lead">
+                            Overview
+                        </p>
+
+                        <p class="text-sm-start">
+                            <cite>
+                                cite: WHO Measles, References:
+                                1. Minta AA, Ferrari M, Antoni S, et al. Progress Toward Measles Elimination — Worldwide, 2000–2023. MMWR Morb Mortal Wkly Rep 2024;73:1036–1042. DOI: http://dx.doi.org/10.15585/mmwr.mm7345a4
+                            </cite>
+                        </p>
+
+                        <p>
+                            Measles is a highly contagious disease caused by a virus. It spreads easily when an infected person breathes, coughs or sneezes. It can cause severe disease, complications, and even death.
+                            Measles can affect anyone but is most common in children.
+                            Measles infects the respiratory tract and then spreads throughout the body. Symptoms include a high fever, cough, runny nose and a rash all over the body.
+                            Being vaccinated is the best way to prevent getting sick with measles or spreading it to other people. The vaccine is safe and helps your body fight off the virus.
+                            Before the introduction of measles vaccine in 1963 and widespread vaccination, major epidemics occurred approximately every two to three years and caused an estimated 2.6 million deaths each year.
+                            An estimated 107 500 people died from measles in 2023 – mostly children under the age of five years, despite the availability of a safe and cost-effective vaccine.
+                            Accelerated immunization activities by countries, WHO, the Measles & Rubella Partnership (formerly the Measles & Rubella Initiative), and other international partners successfully prevented an estimated 60 million deaths between 2000–2023. Vaccination decreased an estimated measles deaths from 800 062 in 2000 to 107
+                        </p>
+
+                    </div>
+
+                    <div class="col-md-5">
+                        <img class="bd-placeholder-img bd-placeholder-img-lg featurette-image img-fluid mx-auto" src="~/images/measles_pics/measles-4.jpg" role="img" aria-label="Placeholder: 500x500" preserveAspectRatio="xMidYMid slice" focusable="false" />
+                    </div>
+                </div>
+
+
+                <div class="d-grid gap-2 d-md-flex justify-content-md-start">
+                    <!--
+                    <button type="button" class="btn btn-primary btn-lg px-4 me-md-2">Primary</button>
+                    <button type="button" class="btn btn-outline-secondary btn-lg px-4">Default</button>
+                    -->
+                    <a class="btn btn-primary btn-lg px-4 me-md-2" asp-controller="DiphtheriaCase" asp-action="Create">Create Case</a>
+                    <a class="btn btn-outline-secondary btn-lg px-4" asp-controller="DiphtheriaCase" asp-action="DiphtheriaDashboard">Dashboard</a>
+                </div>
+
+
+                <br />
+
+
+
+                <!--Gallery -->
+                <hr class="featurette-divider">
+
+                <div class="container my-auto">
+                    <div class="row p-12 pb-0 pe-lg-0 pt-lg-5 align-items-center rounded-3 border shadow-lg">
+                        <div class="col-lg-12 p-3 p-lg-5 pt-lg-3">
+
+
+                            <h5 class="featurette-heading fw-normal lh-1" style="text-align:center;">
+                                Images
+                                <span class="text-body-secondary" style="font:small;">Cite Images</span>
+                            </h5>
+                            <div class="col-lg-12 mx-auto">
+                                <div id="carouselExampleCaptions2" class="carousel slide col-lg-9 mx-auto" style="padding: 8px; margin-bottom: 1px;">
+                                    <div class="carousel-indicators">
+                                        <button type="button" data-bs-target="#carouselExampleCaptions2" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
+                                        <button type="button" data-bs-target="#carouselExampleCaptions2" data-bs-slide-to="1" aria-label="Slide 2"></button>
+                                        <button type="button" data-bs-target="#carouselExampleCaptions2" data-bs-slide-to="2" aria-label="Slide 3"></button>
+
+                                        <button type="button" data-bs-target="#carouselExampleCaptions2" data-bs-slide-to="3" aria-label="Slide 4"></button>
+                                        <button type="button" data-bs-target="#carouselExampleCaptions2" data-bs-slide-to="4" aria-label="Slide 5"></button>
+                                        <button type="button" data-bs-target="#carouselExampleCaptions2" data-bs-slide-to="5" aria-label="Slide 6"></button>
+                                        <button type="button" data-bs-target="#carouselExampleCaptions2" data-bs-slide-to="6" aria-label="Slide 7"></button>
+
+                                    </div>
+                                    <div class="carousel-inner">
+                                        <div class="carousel-item active">
+                                            <img src="~/images/measles_pics/measles-1.jpg" class="card-img img-fluid" width="600" height="900" style="aspect-ratio: auto;" preserveAspectRatio="xMidYMid slice" loading="lazy" alt="...">
+                                            <div class="carousel-caption d-none d-md-block">
+                                                <h5></h5>
+                                                <p></p>
+                                            </div>
+                                        </div>
+                                        <div class="carousel-item">
+                                            <img src="~/images/measles_pics/measles-3.jpg" class="card-img img-fluid" width="600" height="900" style="aspect-ratio: auto;" preserveAspectRatio="xMidYMid slice" loading="lazy" alt="...">
+                                            <div class="carousel-caption d-none d-md-block">
+                                                <h5></h5>
+                                                <p></p>
+                                            </div>
+                                        </div>
+                                        <div class="carousel-item">
+                                            <img src="~/images/measles_pics/measles-4.jpg" class="card-img img-fluid" width="600" height="900" style="aspect-ratio: auto;" preserveAspectRatio="xMidYMid slice" loading="lazy" alt="...">
+                                            <div class="carousel-caption d-none d-md-block">
+                                                <h5></h5>
+                                                <p></p>
+                                            </div>
+                                        </div>
+
+
+
+
+                                        <div class="carousel-item">
+                                            <img src="~/images/measles_pics/measles-5.jpg" class="card-img img-fluid" width="600" height="900" style="aspect-ratio: auto;" preserveAspectRatio="xMidYMid slice" loading="lazy" alt="...">
+                                            <div class="carousel-caption d-none d-md-block">
+                                                <h5></h5>
+                                                <p></p>
+                                            </div>
+                                        </div>
+                                        <div class="carousel-item">
+                                            <img src="~/images/measles_pics/measles-6.jpg" class="card-img img-fluid" width="600" height="900" style="aspect-ratio: auto;" preserveAspectRatio="xMidYMid slice" loading="lazy" alt="...">
+                                            <div class="carousel-caption d-none d-md-block">
+                                                <h5></h5>
+                                                <p></p>
+                                            </div>
+                                        </div>
+                                        <div class="carousel-item">
+                                            <img src="~/images/measles_pics/measles-7.jpg" class="card-img img-fluid" width="600" height="900" style="aspect-ratio: auto;" preserveAspectRatio="xMidYMid slice" loading="lazy" alt="...">
+                                            <div class="carousel-caption d-none d-md-block">
+                                                <h5></h5>
+                                                <p></p>
+                                            </div>
+                                        </div>
+                                        <div class="carousel-item">
+                                            <img src="~/images/measles_pics/measles-8.jpg" class="card-img img-fluid" width="600" height="900" style="aspect-ratio: auto;" preserveAspectRatio="xMidYMid slice" loading="lazy" alt="...">
+                                            <div class="carousel-caption d-none d-md-block">
+                                                <h5></h5>
+                                                <p></p>
+                                            </div>
+                                        </div>
+
+
+                                    </div>
+                                    <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleCaptions2" data-bs-slide="prev">
+                                        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                                        <span class="visually-hidden">Previous</span>
+                                    </button>
+                                    <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleCaptions2" data-bs-slide="next">
+                                        <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                                        <span class="visually-hidden">Next</span>
+                                    </button>
+                                </div>
+
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+                <hr class="featurette-divider">
+
+                <!----------Gallery end----------->
+
+                <br />
+
+
+
+
+
+                <h4 id="scrollspyHeading3"><span class="btn btn-outline-secondary btn-lg px-4" type="button" style="color:black; border-color: black;" data-bs-toggle="collapse" data-bs-target="#collapseWidthExample3" aria-expanded="false" aria-controls="collapseWidthExample3">Symptoms and Transmission</span></h4>
+
+
+                <br />
+                <div class="collapse collapse" id="collapseWidthExample3">
+
+
+                    <div class="row featurette">
+                        <div class="col-md-7">
+                            <h2 class="featurette-heading fw-normal lh-1">
+                                Symptoms and Transmission:
+                                <span class="text-body-secondary"></span>
+                            </h2>
+
+
+                            <p class="lead">
+                                Symptoms and Transmission:
+                            </p>
+
+                            <span>
+                                <cite>From the CDC website:https://www.cdc.gov/measles/index.html</cite>
+                            </span>
+                            <br />
+                            <p class="card-header">Symptoms:</p>
+
+
+                            <br />
+
+                            <div class="card-group" style="text-align: left;padding: 8px;">
+                                <h3 style="font-weight:700;">Signs and symptoms:</h3>
+                                <div>
+                                    <p>
+                                        Symptoms usually begin 7 to 14 days after infection.
+                                        <br />
+                                        <i>Measles isn't just a little rash. Measles can be dangerous, especially for babies and young children.</i>
+                                        <br />
+                                        7–14 days after a measles infection: first symptoms show
+                                        Measles symptoms appear 7 to 14 days after contact with the virus. Measles typically begins with:
+                                    </p>
+
+                                    <p style="font-weight:700;">Initial Symptoms begin 7–14 days after a patient is infected with measles.</p>
+                                    <p>These are the first symptoms the patient may have:</p>
+                                    <ul>
+                                        <li>
+                                            High fever (may spike to more than 104°)
+                                        </li>
+                                        <li>Cough</li>
+                                        <li>Runny nose (coryza)</li>
+                                        <li>Red, watery eyes (conjunctivitis)</li>
+                                    </ul>
+
+
+                                    <p style="font-weight:700;">Symptoms:2–3 days after initial symptoms begin, Koplik spots may appear inside the mouth </p>
+                                    <ul>
+                                        <li>
+                                            Koplik spots
+                                        </li>
+                                        <li>
+                                            Tiny white spots (Koplik spots) may appear inside the mouth two to three days after symptoms begin
+                                        </li>
+                                    </ul>
+
+                                    <p style="font-weight:700;">Symptoms: Measles rash:</p>
+                                    <p>Occour 3–5 days after initial symptoms start. It usually begins as flat red spots that appear on the face at the hairline. They then spread downward to the neck, trunk, arms, legs, and feet.</p>
+                                    <br />
+                                    <ul>
+                                        <li>
+                                            Small raised bumps may also appear on top of the flat red spots.
+                                        </li>
+                                        <li>
+                                            The spots may become joined together as they spread from the head to the rest of the body.
+                                        </li>
+                                        <li>
+                                            When the rash appears, a person's fever may spike to more than 104° Fahrenheit.
+                                        </li>
+                                    </ul>
+                                </div>
+
+                            </div>
+
+                            <br />
+                            <br />
+                            <p class="card-header">Transmission:</p>
+                            <p>
+                                <b>Transmission:</b>
+                                <br />
+                                <span>
+                                    <cite>cite WHO</cite>
+                                </span>
+                                <br />
+                                <div>
+                                    <b>Who is at risk?</b>
+                                    <br />
+                                    <p>
+                                        Any non-immune person (not vaccinated or vaccinated but did not develop immunity) can become infected. Unvaccinated young children and pregnant persons are at highest risk of severe measles complications.
+                                    </p>
+                                    <p>
+                                        <b>Transmission:</b>
+                                        <br />
+                                        Measles is one of the world’s most contagious diseases,<b> spread by contact with infected nasal or throat secretions (coughing or sneezing) or breathing the air that was breathed by someone with measles. The virus remains active and contagious in the air or on infected surfaces for up to two hours.</b> For this reason, it is very infectious, and one person infected by measles can infect nine out of 10 of their unvaccinated close contacts.<b> It can be transmitted by an infected person from four days prior to the onset of the rash to four days after the rash erupts.</b>
+                                    </p>
+                                    <p>
+                                        Measles outbreaks can result in severe complications and deaths, especially among young, malnourished children. In countries close to measles elimination, cases imported from other countries remain an important source of infection.
+                                    </p>
+                                </div>
+
+                            <p>
+                                <b>Risk factors: </b>
+                                <cite>CDC</cite>
+                            <p>
+                                Who is at risk?
+                                <br />
+                                Measles can be serious in all age groups. However, there are several groups that are more likely to suffer from measles complications:
+
+                                Children younger than 5 years of age
+                                Adults older than 20 years of age
+                                Pregnant women
+                                People with weakened immune systems, such as from leukemia or HIV infection
+                            </p>
+
+                            </p>
+
+                            <div>
+                                <b>Complications: </b>
+                                <div>
+                                    <h3 style="font-weight:700;">Complications:</h3>
+                                    <cite>From the CDC website:https://www.cdc.gov/measles/index.html</cite>
+
+                                    <p>
+                                        Common complications from measles are:
+
+                                        Ear infections occur in about 1 out of every 10 children with measles.
+                                        Diarrhea is reported in less than 1 out of 10 people with measles.
+                                    </p>
+
+                                    <b>Common complications:</b>
+                                    <ul>
+                                        <li>
+                                            <b>Ear infections</b> occur in about 1 out of every 10 children with measles.
+                                        </li>
+                                        <li>
+                                            <b>Diarrhea</b> is reported in less than 1 out of 10 people with measles.
+                                        </li>
+                                    </ul>
+
+                                    <br />
+
+                                    <h4>
+                                        Severe complications in children and adults:
+                                    </h4>
+                                    <p>
+                                        Some people may suffer from severe complications, such as pneumonia (infection of the lungs) and encephalitis (swelling of the brain).
+                                        They may need to be hospitalized and could die.
+                                    </p>
+                                    <ul>
+                                        <li>
+                                            Hospitalization: About 1 in 5 unvaccinated people in the U.S. who get measles is hospitalized.
+                                        </li>
+                                        <li>
+                                            Pneumonia: As many as 1 out of every 20 children with measles gets pneumonia, the most common cause of death from measles in young children.
+                                        </li>
+                                        <li>
+                                            Encephalitis: About 1 child out of every 1,000 who get measles will develop encephalitis (swelling of the brain). This can lead to convulsions and leave the child deaf or with intellectual disability.
+                                        </li>
+                                        <li>
+                                            Death: Nearly 1 to 3 of every 1,000 children who become infected with measles will die from respiratory and neurologic complications.
+                                        </li>
+                                        <li>
+                                            Complications during pregnancy: If you are pregnant and have not had the MMR vaccine, measles may cause birth prematurely, or have a low-birth-weight baby.
+                                        </li>
+
+                                    </ul>
+                                    <br />
+
+                                    <h5>
+                                        Long-term complications
+                                    </h5>
+                                    <p>
+                                        Subacute sclerosing panencephalitis (SSPE) is a very rare, but fatal disease of the central nervous system. It results from a measles virus infection acquired earlier in life.
+                                        <br />
+                                        About SSPE
+                                        <br />
+
+                                        SSPE generally develops 7 to 10 years after a person has measles, even though the person seems to have fully recovered from the illness.
+                                        <br />
+                                        Since measles was eliminated in 2000, SSPE is rarely reported in the United States.
+                                        <br />
+                                        Among people who contracted measles during the resurgence in the United States in 1989 to 1991, 7 to 11 out of every 100,000 were estimated to be at risk for developing SSPE.
+                                        <br />
+                                        The risk of developing SSPE may be higher for a person who gets measles before they are 2 years of age.
+                                    </p>
+
+
+                                </div>
+
+                            </div>
+                        </div>
+                        <div class="col-md-5">
+                            <img class="bd-placeholder-img bd-placeholder-img-lg featurette-image img-fluid mx-auto" src="~/images/pics_diphtheria/diphtheria-2.jpg" role="img" aria-label="Placeholder: 500x500" preserveAspectRatio="xMidYMid slice" focusable="false" />
+                        </div>
+                    </div>
+
+
+                </div>
+
+
+
+
+
+
+                <h4 id="scrollspyHeading4"><span class="btn btn-outline-secondary btn-lg px-4" style="color:black; border-color: black;" type="button" data-bs-toggle="collapse" data-bs-target="#collapseWidthExample4" aria-expanded="false" aria-controls="collapseWidthExample3">Treatment</span></h4>
+
+
+                <div class="collapse collapse" id="collapseWidthExample4">
+
+
+                    <div class="row featurette">
+                        <div class="col-md-7">
+                            <h2 class="featurette-heading fw-normal lh-1">
+                                Treatment
+                                <span class="text-body-secondary"></span>
+                            </h2>
+                            <p class="lead">
+                                Treatment and Management Strategies
+                                <br />
+                                <span>
+                                    <small>
+                                        <cite>cite WHO</cite>
+                                    </small>
+                                </span>
+                            </p>
+
+                            <p class="card-header">Treatment:</p>
+                            <div class="card-group">
+                                <p>
+
+                                    <cite>cite WHO</cite>
+
+                                </p>
+
+                                <div>
+                                    <h3 style="font-weight:700;">Treatment:</h3>
+                                    <p>
+                                        There is no specific treatment for measles. Caregiving should focus on relieving symptoms, making the person comfortable and preventing complications.
+                                        <br />
+                                        Drinking enough water and treatments for dehydration can replace fluids lost to diarrhoea or vomiting. Eating a healthy diet is also important.
+                                        <br />
+                                        Doctors may use antibiotics to treat pneumonia and ear and eye infections.
+                                        <br />
+                                        <b>All children or adults with measles should receive two doses of vitamin A supplements, given 24 hours apart.</b> This restores low vitamin A levels that occur even in well-nourished children. It can help prevent eye damage and blindness. Vitamin A supplements may also reduce the number of measles deaths.
+                                    </p>
+                                </div>
+
+
+                            </div>
+
+                            <div class="card-group">
+
+                                <p>
+                                    <b>Prevention: </b>
+
+                                    <cite>cite WHO</cite>
+
+                                </p>
+
+                                <div>
+                                    <h3 style="font-weight:700;">Prevention:</h3>
+                                    <p>
+                                        Community-wide vaccination is the most effective way to prevent measles. All children should be vaccinated against measles. The vaccine is safe, effective and inexpensive.
+                                        <br />
+                                        Children should receive two doses of the vaccine to ensure they are immune. The first dose is usually given at 9 months of age in countries where measles is common and 12–15 months in other countries. A second dose should be given later in childhood, usually at 15–18 months.
+                                        <br />
+                                        The measles vaccine is given alone or often combined with vaccines for mumps, rubella and/or varicella.
+                                        <br />
+                                        Routine measles vaccination, combined with mass immunization campaigns in countries with high case rates are crucial for reducing global measles deaths. The measles vaccine has been in use for about 60 years and costs less than US$ 1 per child. The measles vaccine is also used in emergencies to stop outbreaks from spreading. The risk of measles outbreaks is particularly high amongst refugees, who should be vaccinated as soon as possible.
+                                        <br />
+                                        Combining vaccines slightly increases the cost but allows for shared delivery and administration costs and importantly, adds the benefit of protection against rubella, the most common vaccine preventable infection that can infect babies in the womb.
+                                        <br />
+                                        In 2023, 74% of children received both doses of the measles vaccine, and about 83% of the world's children received one dose of measles vaccine by their first birthday. Two doses of the vaccine are recommended to ensure immunity and prevent outbreaks, as not all children develop immunity from the first dose.
+                                        <br />
+                                        Approximately 22 million infants missed at least one dose of measles vaccine through routine immunization in 2023.
+                                    </p>
+                                </div>
+
+                            </div>
+
+                        </div>
+                        <div class="col-md-5">
+                            <img class="bd-placeholder-img bd-placeholder-img-lg featurette-image img-fluid mx-auto" width="500" height="500" src="~/images/measles_pics/measles-10.jpg" role="img" aria-label="Placeholder: 500x500" preserveAspectRatio="xMidYMid slice" focusable="false" />
+                        </div>
+                    </div>
+
+
+                </div>
+
+
+            </div>
+
+            </<div>
+            </div>
+        </div>
+
+    </div>
+    <!--end scrolspy-------------------------->
+    <!----------------------------Measles start-------------------------------------->
+
+
+
+
+
+    <div>
+        <a asp-action="Index">Back to List</a>
+    </div>
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}

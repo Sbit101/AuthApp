@@ -1,0 +1,151 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+}
+
+
+
+@model IEnumerable<AuthApp.Models.MeaslesCase>
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h1>Index</h1>
+
+<p>
+    <a asp-action="Create">Create New</a>
+</p>
+<div class="container-fluid">
+    <table class="table table-responsive-lg">
+        <thead>
+            <tr>
+                <!--
+                <th>
+                    @Html.DisplayNameFor(model => model.NameOfTreatingPhysician)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.NameOfHealthcareCentre)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.HealthcareCentreTelephone)
+                </th>
+                -->
+
+                <th>
+                    @Html.DisplayNameFor(model => model.PatientFirstName)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.PatientLastName)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.PatientAge)
+                </th>
+
+                <th>
+                    @Html.DisplayNameFor(model => model.PatientSex)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.PatientCountry)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.PatientTelephoneNumber)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.PatientCity)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.PatientAddress)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.PatientHouseHoldSize)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.PatientSymptomsPositiveForMeasles)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.DateofFirstClinicalDiagnosis)
+                </th>
+
+
+                <!--
+                <th>
+                    @Html.DisplayNameFor(model => model.DateSymptomsOnset)
+                </th>
+                <th>
+                </th>
+                -->
+
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+                <tr>
+
+                    <!--
+                    <td>
+                        @Html.DisplayFor(modelItem => item.NameOfTreatingPhysician)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.NameOfHealthcareCentre)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.HealthcareCentreTelephone)
+                    </td>
+
+                    -->
+
+                    <td>
+                        @Html.DisplayFor(modelItem => item.PatientFirstName)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.PatientLastName)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.PatientAge)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.PatientSex)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.PatientCountry)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.PatientTelephoneNumber)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.PatientCity)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.PatientAddress)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.PatientHouseHoldSize)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.PatientSymptomsPositiveForMeasles)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.DateofFirstClinicalDiagnosis)
+                    </td>
+
+                    <!--
+                    <td>
+                        @Html.DisplayFor(modelItem => item.DateSymptomsOnset)
+                    </td>
+                    <td>
+                    </td>
+                    -->
+                    <td>
+                        <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
+                        <a asp-action="Details" asp-route-id="@item.Id">Details</a> |
+                        <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>
