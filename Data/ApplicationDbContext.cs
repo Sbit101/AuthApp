@@ -165,7 +165,7 @@ namespace AuthApp.Data
 
             //set user password
             PasswordHasher<ApplicationUser> ph = new PasswordHasher<ApplicationUser>();
-            appUser.PasswordHash = ph.HashPassword(appUser, "mypassword_123456Qq!?"); //hardcoded bad use code above
+            appUser.PasswordHash = ph.HashPassword(appUser, "mypassword_1234!t"); //hardcoded bad use code above
             //appUser.PasswordHash = ph.HashPassword(appUser, passkey);
 
             //seed user
